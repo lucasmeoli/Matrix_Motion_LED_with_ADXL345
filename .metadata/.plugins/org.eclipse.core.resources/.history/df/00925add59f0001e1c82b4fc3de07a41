@@ -1,0 +1,114 @@
+/*
+ * API_max7219_led_display.c
+ *
+ *  Created on: Apr 1, 2024
+ *      Author: lpmeoli
+ */
+
+
+/* Includes ------------------------------------------------------------------*/
+#include <stdio.h>
+#include <stdint.h>
+#include <stdbool.h>
+#include "stm32f4xx_hal.h"
+#include "stm32f4xx_nucleo_144.h"
+#include "API_uart.h"
+
+#include "API_max7219_led_display.h"
+
+/* Private typedef -----------------------------------------------------------*/
+/* Private define ------------------------------------------------------------*/
+
+/* Private macro -------------------------------------------------------------*/
+/* Private variables ---------------------------------------------------------*/
+
+static SPI_HandleTypeDef hspi1;
+
+/* Private function prototypes -----------------------------------------------*/
+
+
+
+/* Public functions ---------------------------------------------------------*/
+
+void init_() {
+
+	/* I2C configuration*/
+	hspi1.Instance 				= SPI1;
+	hspi1.Init.Mode 			= SPI_MODE_MASTER;
+	hspi1.Init.Direction		= SPI_DIRECTION_2LINES;
+	hspi1.Init.DataSize			= SPI_DATASIZE_16BIT;
+	hspi1.Init.CLKPolarity		= SPI_POLARITY_LOW;     /*!< Specifies the serial clock steady state.
+	                                     This parameter can be a value of @ref SPI_Clock_Polarity */
+
+	  uint32_t CLKPhase;            /*!< Specifies the clock active edge for the bit capture.
+	                                     This parameter can be a value of @ref SPI_Clock_Phase */
+
+	  uint32_t NSS;                 /*!< Specifies whether the NSS signal is managed by
+	                                     hardware (NSS pin) or by software using the SSI bit.
+	                                     This parameter can be a value of @ref SPI_Slave_Select_management */
+
+	  uint32_t BaudRatePrescaler;   /*!< Specifies the Baud Rate prescaler value which will be
+	                                     used to configure the transmit and receive SCK clock.
+	                                     This parameter can be a value of @ref SPI_BaudRate_Prescaler
+	                                     @note The communication clock is derived from the master
+	                                     clock. The slave clock does not need to be set. */
+
+	  uint32_t FirstBit;            /*!< Specifies whether data transfers start from MSB or LSB bit.
+	                                     This parameter can be a value of @ref SPI_MSB_LSB_transmission */
+
+	  uint32_t TIMode;              /*!< Specifies if the TI mode is enabled or not.
+	                                     This parameter can be a value of @ref SPI_TI_mode */
+
+	  uint32_t CRCCalculation;      /*!< Specifies if the CRC calculation is enabled or not.
+	                                     This parameter can be a value of @ref SPI_CRC_Calculation */
+
+	  uint32_t CRCPolynomial;       /*!< Specifies the polynomial used for the CRC calculation.
+	                                     This parameter must be an odd number between Min_Data = 1 and Max_Data = 65535 */
+	}
+
+
+	GPIO_InitTypeDef GPIO_InitStruct;
+
+	/* GPIO Ports Clock Enable */
+	__HAL_RCC_GPIOB_CLK_ENABLE();
+
+	/* I2C GPIO configuration */
+	GPIO_InitStruct.Pin 		= GPIO_PIN_8|GPIO_PIN_9;
+	GPIO_InitStruct.Mode 		= GPIO_MODE_AF_OD;
+	GPIO_InitStruct.Pull 		= GPIO_NOPULL;
+	GPIO_InitStruct.Speed 		= GPIO_SPEED_FREQ_LOW;
+	GPIO_InitStruct.Alternate 	= GPIO_AF4_I2C1;
+
+	HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
+
+	 /* Peripheral clock enable */
+	__HAL_RCC_I2C1_CLK_ENABLE();
+
+	HAL_I2C_Init(&hi2c1);
+
+	/* Chequeo que la direccion statica sea correcta */
+	if (read_register(REG_DEVID) != 0xE5) {
+		uart_send_string(pmesg_error);
+	}
+
+	write_register(REG_BW_RATE, 0x08);
+	write_register(REG_DATA_FORMAT, 0x08);
+	write_register(REG_POWER_CTL, 0x08);
+}
+
+/* Private functions ---------------------------------------------------------*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

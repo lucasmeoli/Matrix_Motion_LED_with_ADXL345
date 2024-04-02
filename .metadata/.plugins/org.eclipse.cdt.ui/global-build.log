@@ -1,0 +1,7 @@
+17:17:34 **** Incremental Build of configuration Debug for project accelerometer_LED_Matrix ****
+make -j16 all 
+arm-none-eabi-size  accelerometer_LED_Matrix.elf 
+   text	   data	    bss	    dec	    hex	filename
+  13824	    132	   1812	  15768	   3d98	accelerometer_LED_Matrix.elf
+Finished building: default.size.stdout
+ 
