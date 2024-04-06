@@ -1,0 +1,126 @@
+/*
+ * API_max7219_led_display.c
+ *
+ *  Created on: Apr 1, 2024
+ *      Author: lpmeoli
+ */
+
+
+/* Includes ------------------------------------------------------------------*/
+#include <stdio.h>
+#include <stdint.h>
+#include <stdbool.h>
+#include "stm32f4xx_nucleo_144.h" 	/* <- BSP include */
+
+
+#include "API_max7219_led_display.h"
+
+/* Private typedef -----------------------------------------------------------*/
+/* Private define ------------------------------------------------------------*/
+
+/* Private macro -------------------------------------------------------------*/
+/* Private variables ---------------------------------------------------------*/
+
+SPI_HandleTypeDef hspi1;
+
+/* Private function prototypes -----------------------------------------------*/
+
+typedef enum {
+    REG_NO_OP           = 0x00,
+    REG_DIGIT_0         = 0x01,
+    REG_DIGIT_1         = 0x02,
+    REG_DIGIT_2         = 0x03,
+    REG_DIGIT_3         = 0x04,
+    REG_DIGIT_4         = 0x05,
+    REG_DIGIT_5         = 0x06,
+    REG_DIGIT_6         = 0x07,
+    REG_DIGIT_7         = 0x08,
+    REG_DECODE_MODE     = 0x09,
+    REG_INTENSITY       = 0x0A,
+    REG_SCAN_LIMIT      = 0x0B,
+    REG_SHUTDOWN        = 0x0C,
+    REG_DISPLAY_TEST    = 0x0F,
+} MAX7219_REGISTERS;
+
+/* Public functions ---------------------------------------------------------*/
+
+void init_max7219() {
+
+	/* I2C configuration*/
+	hspi1.Instance 					= SPI1;
+	hspi1.Init.Mode 				= SPI_MODE_MASTER;
+	hspi1.Init.Direction			= SPI_DIRECTION_1LINE;
+	hspi1.Init.DataSize				= SPI_DATASIZE_16BIT; //el ejemplo dice 8
+	hspi1.Init.CLKPolarity			= SPI_POLARITY_LOW;
+	hspi1.Init.CLKPhase				= SPI_PHASE_1EDGE; //example internet it said 1, segun grafico es 2
+	hspi1.Init.NSS 					= SPI_NSS_SOFT;
+	hspi1.Init.BaudRatePrescaler 	= SPI_BAUDRATEPRESCALER_2;
+	hspi1.Init.FirstBit				= SPI_FIRSTBIT_MSB;
+	hspi1.Init.TIMode				= SPI_TIMODE_DISABLE;
+	hspi1.Init.CRCCalculation 		= SPI_CRCCALCULATION_DISABLE;
+
+
+	GPIO_InitTypeDef GPIO_InitStruct;
+
+	/* GPIO Ports Clock Enable */
+	__HAL_RCC_GPIOA_CLK_ENABLE();
+	__HAL_RCC_GPIOC_CLK_ENABLE();
+
+
+	//El CS debe ser un GPIO
+
+	/* I2C GPIO configuration */
+	/*
+	 * PA5 = SCK
+	 * PA7 = MOSI
+	 * */
+	GPIO_InitStruct.Pin 		= GPIO_PIN_5|GPIO_PIN_7;
+	GPIO_InitStruct.Mode 		= GPIO_MODE_AF_OD;
+	GPIO_InitStruct.Pull 		= GPIO_NOPULL;
+	GPIO_InitStruct.Speed 		= GPIO_SPEED_FREQ_LOW;
+	GPIO_InitStruct.Alternate 	= GPIO_AF5_SPI1;
+	HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
+
+
+	HAL_GPIO_WritePin(GPIOC, GPIO_PIN_7, GPIO_PIN_RESET);
+	GPIO_InitStruct.Pin 		= GPIO_PIN_7;
+	GPIO_InitStruct.Mode 		= GPIO_MODE_OUTPUT_PP;
+	GPIO_InitStruct.Pull 		= GPIO_NOPULL;
+	GPIO_InitStruct.Speed 		= GPIO_SPEED_FREQ_LOW;
+	HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
+
+
+	 /* Peripheral clock enable */
+	__HAL_RCC_SPI1_CLK_ENABLE();
+
+	HAL_SPI_Init(&hspi1);
+
+	//Despues de iniciarlo deberiamos mandarl a la direccion 0x09 0x00 para que no decodifique
+
+}
+
+void send_data_SPI(uint8_t reg, uint8_t data) {
+	HAL_GPIO_WritePin(GPIOC, GPIO_PIN_7, GPIO_PIN_RESET); // select slave
+	HAL_SPI_Transmit(&hspi1, &reg, sizeof(reg), 1000);
+	HAL_SPI_Transmit(&hspi1, &data, sizeof(data), 1000);
+	HAL_GPIO_WritePin(GPIOC, GPIO_PIN_7, GPIO_PIN_SET);
+}
+
+
+
+/* Private functions ---------------------------------------------------------*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

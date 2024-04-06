@@ -1,10 +1,10 @@
-17:17:34 **** Incremental Build of configuration Debug for project accelerometer_LED_Matrix ****
+11:29:48 **** Incremental Build of configuration Debug for project accelerometer_LED_Matrix ****
 make -j16 all 
 arm-none-eabi-size  accelerometer_LED_Matrix.elf 
    text	   data	    bss	    dec	    hex	filename
-  13824	    132	   1812	  15768	   3d98	accelerometer_LED_Matrix.elf
+   8340	     32	   1656	  10028	   272c	accelerometer_LED_Matrix.elf
 Finished building: default.size.stdout
  
 
-17:17:34 Build Finished. 0 errors, 0 warnings. (took 175ms)
+11:29:48 Build Finished. 0 errors, 0 warnings. (took 173ms)
 
