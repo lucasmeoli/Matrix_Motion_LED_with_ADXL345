@@ -25,6 +25,8 @@ typedef enum {
     REG_DISPLAY_TEST    = 0x0F,
 } MAX7219_REGISTERS;
 
+void max7219_SPI_init();
+void max7219_send_data(uint8_t reg, uint8_t data, uint8_t display_num);
 void init_max7219();
 void send_data_SPI(uint8_t reg, uint8_t data);
 void send_data_SPI2(uint8_t reg, uint8_t data);
