@@ -1,10 +1,30 @@
-11:29:48 **** Incremental Build of configuration Debug for project accelerometer_LED_Matrix ****
+12:29:40 **** Incremental Build of configuration Debug for project accelerometer_LED_Matrix ****
 make -j16 all 
+arm-none-eabi-gcc "../Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DSTM32 -DSTM32F429ZITx -DSTM32F4 -DNUCLEO_F429ZI -DUSE_HAL_DRIVER -DSTM32F429xx -c -I../Inc -I"/home/lpmeoli/Especializacion/trabajos_practicos/bimestre_01/PdC_Workspace/accelerometer_LED_Matrix/Drivers/STM32F4xx_HAL_Driver/Inc" -I"/home/lpmeoli/Especializacion/trabajos_practicos/bimestre_01/PdC_Workspace/accelerometer_LED_Matrix/Drivers/CMSIS/Include" -I"/home/lpmeoli/Especializacion/trabajos_practicos/bimestre_01/PdC_Workspace/accelerometer_LED_Matrix/Drivers/CMSIS/Device/ST/STM32F4xx/Include" -I"/home/lpmeoli/Especializacion/trabajos_practicos/bimestre_01/PdC_Workspace/accelerometer_LED_Matrix/Drivers/BSP/STM32F4xx_Nucleo_144" -I"/home/lpmeoli/Especializacion/trabajos_practicos/bimestre_01/PdC_Workspace/accelerometer_LED_Matrix/Drivers/Core/Inc" -I"/home/lpmeoli/Especializacion/trabajos_practicos/bimestre_01/PdC_Workspace/accelerometer_LED_Matrix/Drivers/API" -I"/home/lpmeoli/Especializacion/trabajos_practicos/bimestre_01/PdC_Workspace/accelerometer_LED_Matrix/Drivers/API/Inc" -I"/home/lpmeoli/Especializacion/trabajos_practicos/bimestre_01/PdC_Workspace/accelerometer_LED_Matrix/Drivers/API/Src" -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Src/main.d" -MT"Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Src/main.o"
+../Src/main.c: In function 'main':
+../Src/main.c:59:23: warning: unused variable 'coordinates' [-Wunused-variable]
+   59 |         coordinates_t coordinates;
+      |                       ^~~~~~~~~~~
+../Src/main.c:58:17: warning: unused variable 'zcoordinate' [-Wunused-variable]
+   58 |         int16_t zcoordinate = 0;
+      |                 ^~~~~~~~~~~
+../Src/main.c:57:17: warning: unused variable 'ycoordinate' [-Wunused-variable]
+   57 |         int16_t ycoordinate = 0;
+      |                 ^~~~~~~~~~~
+../Src/main.c:56:17: warning: unused variable 'xcoordinate' [-Wunused-variable]
+   56 |         int16_t xcoordinate = 0;
+      |                 ^~~~~~~~~~~
+arm-none-eabi-gcc -o "accelerometer_LED_Matrix.elf" @"objects.list"   -mcpu=cortex-m4 -T"/home/lpmeoli/Especializacion/trabajos_practicos/bimestre_01/PdC_Workspace/accelerometer_LED_Matrix/STM32F429ZITX_FLASH.ld" --specs=nosys.specs -Wl,-Map="accelerometer_LED_Matrix.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: accelerometer_LED_Matrix.elf
+ 
 arm-none-eabi-size  accelerometer_LED_Matrix.elf 
+arm-none-eabi-objdump -h -S accelerometer_LED_Matrix.elf  > "accelerometer_LED_Matrix.list"
    text	   data	    bss	    dec	    hex	filename
-   8340	     32	   1656	  10028	   272c	accelerometer_LED_Matrix.elf
+   9324	     32	   1656	  11012	   2b04	accelerometer_LED_Matrix.elf
 Finished building: default.size.stdout
  
+Finished building: accelerometer_LED_Matrix.list
+ 
 
-11:29:48 Build Finished. 0 errors, 0 warnings. (took 173ms)
+12:29:40 Build Finished. 0 errors, 4 warnings. (took 376ms)
 

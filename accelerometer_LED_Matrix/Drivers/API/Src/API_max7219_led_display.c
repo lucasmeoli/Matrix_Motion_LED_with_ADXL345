@@ -63,7 +63,7 @@ void init_max7219() {
 	hspi1.Instance 					= SPI1;
 	hspi1.Init.Mode 				= SPI_MODE_MASTER;
 	hspi1.Init.Direction			= SPI_DIRECTION_1LINE;
-	hspi1.Init.DataSize				= SPI_DATASIZE_16BIT; //el ejemplo dice 8
+	hspi1.Init.DataSize				= SPI_DATASIZE_8BIT; //el ejemplo dice 8
 	hspi1.Init.CLKPolarity			= SPI_POLARITY_LOW;
 	hspi1.Init.CLKPhase				= SPI_PHASE_1EDGE; //example internet it said 1, segun grafico es 2
 	hspi1.Init.NSS 					= SPI_NSS_SOFT;
@@ -79,22 +79,94 @@ void init_max7219() {
 }
 
 void send_data_SPI(uint8_t reg, uint8_t data) {
-//	HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4, GPIO_PIN_RESET); // select slave
-//	HAL_SPI_Transmit(&hspi1, &reg, sizeof(reg), HAL_MAX_DELAY);
-//	while(HAL_SPI_GetState(&hspi1) != HAL_SPI_STATE_READY);
-//	HAL_SPI_Transmit(&hspi1, &data, sizeof(data), HAL_MAX_DELAY);
-//	while(HAL_SPI_GetState(&hspi1) != HAL_SPI_STATE_READY);
-//	HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4, GPIO_PIN_SET);
 
-	uint8_t aux[]={data,reg};
-	uint16_t size = sizeof(aux)/sizeof(uint8_t);
-	HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4, GPIO_PIN_RESET);
-	HAL_SPI_Transmit(&hspi1, (uint8_t *)aux, 1, HAL_MAX_DELAY);
+	HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4, GPIO_PIN_RESET); // select slave
+	HAL_SPI_Transmit(&hspi1, &reg, 1, 1000);
+	while(HAL_SPI_GetState(&hspi1) != HAL_SPI_STATE_READY);
+	HAL_SPI_Transmit(&hspi1, &data, 1, 1000);
+	while(HAL_SPI_GetState(&hspi1) != HAL_SPI_STATE_READY);
 	HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4, GPIO_PIN_SET);
+
+//	uint8_t aux[]={data,reg};
+//	uint16_t size = sizeof(aux)/sizeof(uint8_t);
+//	HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4, GPIO_PIN_RESET);
+//	HAL_SPI_Transmit(&hspi1, (uint8_t *)aux, 1, HAL_MAX_DELAY);
+//	HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4, GPIO_PIN_SET);
 
 
 }
 
+void send_data_SPI2(uint8_t reg, uint8_t data) {
+	uint8_t no_op = 0x00;
+
+	HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4, GPIO_PIN_RESET); // select slave
+
+	HAL_SPI_Transmit(&hspi1, &reg, 1, 1000);
+	while(HAL_SPI_GetState(&hspi1) != HAL_SPI_STATE_READY);
+	HAL_SPI_Transmit(&hspi1, &data, 1, 1000);
+	while(HAL_SPI_GetState(&hspi1) != HAL_SPI_STATE_READY);
+
+	HAL_SPI_Transmit(&hspi1, &no_op, 1, 1000);
+	while(HAL_SPI_GetState(&hspi1) != HAL_SPI_STATE_READY);
+	HAL_SPI_Transmit(&hspi1, &no_op, 1, 1000);
+	while(HAL_SPI_GetState(&hspi1) != HAL_SPI_STATE_READY);
+
+	HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4, GPIO_PIN_SET);
+
+}
+
+void send_data_SPI3(uint8_t reg, uint8_t data) {
+	uint8_t no_op = 0x00;
+
+	HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4, GPIO_PIN_RESET); // select slave
+
+	HAL_SPI_Transmit(&hspi1, &reg, 1, 1000);
+	while(HAL_SPI_GetState(&hspi1) != HAL_SPI_STATE_READY);
+	HAL_SPI_Transmit(&hspi1, &data, 1, 1000);
+	while(HAL_SPI_GetState(&hspi1) != HAL_SPI_STATE_READY);
+
+	HAL_SPI_Transmit(&hspi1, &no_op, 1, 1000);
+	while(HAL_SPI_GetState(&hspi1) != HAL_SPI_STATE_READY);
+	HAL_SPI_Transmit(&hspi1, &no_op, 1, 1000);
+	while(HAL_SPI_GetState(&hspi1) != HAL_SPI_STATE_READY);
+
+	HAL_SPI_Transmit(&hspi1, &no_op, 1, 1000);
+	while(HAL_SPI_GetState(&hspi1) != HAL_SPI_STATE_READY);
+	HAL_SPI_Transmit(&hspi1, &no_op, 1, 1000);
+	while(HAL_SPI_GetState(&hspi1) != HAL_SPI_STATE_READY);
+
+	HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4, GPIO_PIN_SET);
+
+}
+
+void send_data_SPI4(uint8_t reg, uint8_t data) {
+	uint8_t no_op = 0x00;
+
+	HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4, GPIO_PIN_RESET); // select slave
+	HAL_SPI_Transmit(&hspi1, &reg, 1, 1000);
+	while(HAL_SPI_GetState(&hspi1) != HAL_SPI_STATE_READY);
+	HAL_SPI_Transmit(&hspi1, &data, 1, 1000);
+	while(HAL_SPI_GetState(&hspi1) != HAL_SPI_STATE_READY);
+
+	HAL_SPI_Transmit(&hspi1, &no_op, 1, 1000);
+	while(HAL_SPI_GetState(&hspi1) != HAL_SPI_STATE_READY);
+	HAL_SPI_Transmit(&hspi1, &no_op, 1, 1000);
+	while(HAL_SPI_GetState(&hspi1) != HAL_SPI_STATE_READY);
+
+	HAL_SPI_Transmit(&hspi1, &no_op, 1, 1000);
+	while(HAL_SPI_GetState(&hspi1) != HAL_SPI_STATE_READY);
+	HAL_SPI_Transmit(&hspi1, &no_op, 1, 1000);
+	while(HAL_SPI_GetState(&hspi1) != HAL_SPI_STATE_READY);
+
+	HAL_SPI_Transmit(&hspi1, &no_op, 1, 1000);
+	while(HAL_SPI_GetState(&hspi1) != HAL_SPI_STATE_READY);
+	HAL_SPI_Transmit(&hspi1, &no_op, 1, 1000);
+	while(HAL_SPI_GetState(&hspi1) != HAL_SPI_STATE_READY);
+
+	HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4, GPIO_PIN_SET);
+
+
+}
 
 
 /* Private functions ---------------------------------------------------------*/

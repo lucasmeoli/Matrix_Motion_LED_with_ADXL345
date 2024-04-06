@@ -27,5 +27,7 @@ typedef enum {
 
 void init_max7219();
 void send_data_SPI(uint8_t reg, uint8_t data);
-
+void send_data_SPI2(uint8_t reg, uint8_t data);
+void send_data_SPI3(uint8_t reg, uint8_t data);
+void send_data_SPI4(uint8_t reg, uint8_t data);
 #endif /* API_INC_API_MAX7219_LED_DISPLAY_H_ */

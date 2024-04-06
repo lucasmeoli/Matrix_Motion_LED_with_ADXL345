@@ -82,19 +82,72 @@ int main(void) {
 	//init_adlx345();
 
 	init_max7219();
-	HAL_Delay(200);
+
+
 	send_data_SPI(REG_DECODE_MODE,0x00);
-	HAL_Delay(200);
 	send_data_SPI(REG_DECODE_MODE,0x00);
-	HAL_Delay(200);
-	send_data_SPI(REG_INTENSITY,0x0F);
-	HAL_Delay(200);
+	send_data_SPI(REG_INTENSITY,0x00);
 	send_data_SPI(REG_SCAN_LIMIT,0x07);
-	HAL_Delay(200);
 	send_data_SPI(REG_SHUTDOWN,0x01);
-	HAL_Delay(200);
 	send_data_SPI(REG_DISPLAY_TEST,0x00);
-	HAL_Delay(200);
+
+	send_data_SPI2(REG_DECODE_MODE,0x00);
+	send_data_SPI2(REG_DECODE_MODE,0x00);
+	send_data_SPI2(REG_INTENSITY,0x00);
+	send_data_SPI2(REG_SCAN_LIMIT,0x07);
+	send_data_SPI2(REG_SHUTDOWN,0x01);
+	send_data_SPI2(REG_DISPLAY_TEST,0x00);
+
+	send_data_SPI3(REG_DECODE_MODE,0x00);
+	send_data_SPI3(REG_DECODE_MODE,0x00);
+	send_data_SPI3(REG_INTENSITY,0x00);
+	send_data_SPI3(REG_SCAN_LIMIT,0x07);
+	send_data_SPI3(REG_SHUTDOWN,0x01);
+	send_data_SPI3(REG_DISPLAY_TEST,0x00);
+
+	send_data_SPI4(REG_DECODE_MODE,0x00);
+	send_data_SPI4(REG_DECODE_MODE,0x00);
+	send_data_SPI4(REG_INTENSITY,0x00);
+	send_data_SPI4(REG_SCAN_LIMIT,0x07);
+	send_data_SPI4(REG_SHUTDOWN,0x01);
+	send_data_SPI4(REG_DISPLAY_TEST,0x00);
+
+
+	send_data_SPI(REG_DIGIT_0, 0xFF);
+	send_data_SPI(REG_DIGIT_1, 0x81);
+	send_data_SPI(REG_DIGIT_2, 0x81);
+	send_data_SPI(REG_DIGIT_3, 0xFF);
+	send_data_SPI(REG_DIGIT_4, 0xFF);
+	send_data_SPI(REG_DIGIT_5, 0x81);
+	send_data_SPI(REG_DIGIT_6, 0x81);
+	send_data_SPI(REG_DIGIT_7, 0x81);
+
+	send_data_SPI2(REG_DIGIT_0, 0x80);
+	send_data_SPI2(REG_DIGIT_1, 0x80);
+	send_data_SPI2(REG_DIGIT_2, 0x80);
+	send_data_SPI2(REG_DIGIT_3, 0x80);
+	send_data_SPI2(REG_DIGIT_4, 0x80);
+	send_data_SPI2(REG_DIGIT_5, 0x80);
+	send_data_SPI2(REG_DIGIT_6, 0x80);
+	send_data_SPI2(REG_DIGIT_7, 0xFF);
+
+	send_data_SPI3(REG_DIGIT_0, 0xFF);
+	send_data_SPI3(REG_DIGIT_1, 0x81);
+	send_data_SPI3(REG_DIGIT_2, 0x81);
+	send_data_SPI3(REG_DIGIT_3, 0x81);
+	send_data_SPI3(REG_DIGIT_4, 0x81);
+	send_data_SPI3(REG_DIGIT_5, 0x81);
+	send_data_SPI3(REG_DIGIT_6, 0x81);
+	send_data_SPI3(REG_DIGIT_7, 0xFF);
+
+	send_data_SPI4(REG_DIGIT_0, 0x81);
+	send_data_SPI4(REG_DIGIT_1, 0x81);
+	send_data_SPI4(REG_DIGIT_2, 0x81);
+	send_data_SPI4(REG_DIGIT_3, 0xFF);
+	send_data_SPI4(REG_DIGIT_4, 0xFF);
+	send_data_SPI4(REG_DIGIT_5, 0x81);
+	send_data_SPI4(REG_DIGIT_6, 0x81);
+	send_data_SPI4(REG_DIGIT_7, 0x81);
 //
 //	send_data_SPI(REG_DIGIT_1, 0xFF);
 	/* Infinite loop */
@@ -102,24 +155,9 @@ int main(void) {
 		//HAL_GPIO_WritePin(GPIOA, GPIO_PIN_6, GPIO_PIN_SET);
 		//El chip select ESTA funcionando
 		BSP_LED_Toggle(LED1);
-		send_data_SPI(0x01, 0x01);
-		send_data_SPI(0x02, 0x01);
-		send_data_SPI(0x03, 0x01);
-		send_data_SPI(0x04, 0x01);
-		HAL_Delay(500);
-		send_data_SPI(0x01, 0x02);
-		HAL_Delay(500);
-		send_data_SPI(0x01, 0x03);
-		HAL_Delay(500);
-		send_data_SPI(0x01, 0x04);
-		HAL_Delay(500);
-		send_data_SPI(0x01, 0x05);
-		HAL_Delay(500);
-		send_data_SPI(0x01, 0x06);
-		HAL_Delay(500);
-		send_data_SPI(0x01, 0x07);
-		HAL_Delay(500);
 
+
+		HAL_Delay(1000);
 //		uart_send_string(pmes_start);
 //
 //		coordinates = read_coordinates();

@@ -1,2 +1,5 @@
 ../Drivers/API/Src/API_max7219_led_display.c:32:6:init_max7219	40	static
-../Drivers/API/Src/API_max7219_led_display.c:81:6:send_data_SPI	24	static
+../Drivers/API/Src/API_max7219_led_display.c:81:6:send_data_SPI	16	static
+../Drivers/API/Src/API_max7219_led_display.c:99:6:send_data_SPI2	24	static
+../Drivers/API/Src/API_max7219_led_display.c:125:6:send_data_SPI3	24	static
+../Drivers/API/Src/API_max7219_led_display.c:156:6:send_data_SPI4	24	static
