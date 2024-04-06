@@ -83,8 +83,8 @@ int main(void) {
 
 	init_max7219();
 
+	HAL_Delay(1000);
 
-	send_data_SPI(REG_DECODE_MODE,0x00);
 	send_data_SPI(REG_DECODE_MODE,0x00);
 	send_data_SPI(REG_INTENSITY,0x00);
 	send_data_SPI(REG_SCAN_LIMIT,0x07);
@@ -92,20 +92,18 @@ int main(void) {
 	send_data_SPI(REG_DISPLAY_TEST,0x00);
 
 	send_data_SPI2(REG_DECODE_MODE,0x00);
-	send_data_SPI2(REG_DECODE_MODE,0x00);
 	send_data_SPI2(REG_INTENSITY,0x00);
 	send_data_SPI2(REG_SCAN_LIMIT,0x07);
 	send_data_SPI2(REG_SHUTDOWN,0x01);
 	send_data_SPI2(REG_DISPLAY_TEST,0x00);
 
-	send_data_SPI3(REG_DECODE_MODE,0x00);
+
 	send_data_SPI3(REG_DECODE_MODE,0x00);
 	send_data_SPI3(REG_INTENSITY,0x00);
 	send_data_SPI3(REG_SCAN_LIMIT,0x07);
 	send_data_SPI3(REG_SHUTDOWN,0x01);
 	send_data_SPI3(REG_DISPLAY_TEST,0x00);
 
-	send_data_SPI4(REG_DECODE_MODE,0x00);
 	send_data_SPI4(REG_DECODE_MODE,0x00);
 	send_data_SPI4(REG_INTENSITY,0x00);
 	send_data_SPI4(REG_SCAN_LIMIT,0x07);

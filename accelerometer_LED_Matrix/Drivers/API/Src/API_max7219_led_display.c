@@ -35,11 +35,10 @@ void init_max7219() {
 
 	/* GPIO Ports Clock Enable */
 	__HAL_RCC_GPIOA_CLK_ENABLE();
-	__HAL_RCC_GPIOC_CLK_ENABLE();
 	/* Peripheral clock enable */
 	__HAL_RCC_SPI1_CLK_ENABLE();
-
-
+//
+//
 	HAL_GPIO_WritePin(GPIOA, GPIO_PIN_5, GPIO_PIN_RESET);
 	HAL_GPIO_WritePin(GPIOA, GPIO_PIN_7, GPIO_PIN_RESET);
     GPIO_InitStruct.Pin 		= GPIO_PIN_5|GPIO_PIN_7;
@@ -63,9 +62,9 @@ void init_max7219() {
 	hspi1.Instance 					= SPI1;
 	hspi1.Init.Mode 				= SPI_MODE_MASTER;
 	hspi1.Init.Direction			= SPI_DIRECTION_1LINE;
-	hspi1.Init.DataSize				= SPI_DATASIZE_8BIT; //el ejemplo dice 8
+	hspi1.Init.DataSize				= SPI_DATASIZE_8BIT;
 	hspi1.Init.CLKPolarity			= SPI_POLARITY_LOW;
-	hspi1.Init.CLKPhase				= SPI_PHASE_1EDGE; //example internet it said 1, segun grafico es 2
+	hspi1.Init.CLKPhase				= SPI_PHASE_1EDGE;
 	hspi1.Init.NSS 					= SPI_NSS_SOFT;
 	hspi1.Init.BaudRatePrescaler 	= SPI_BAUDRATEPRESCALER_256;
 	hspi1.Init.FirstBit				= SPI_FIRSTBIT_MSB;
