@@ -40,6 +40,7 @@ uint32_t size_blink_timers = sizeof(blink_timers)/sizeof(uint32_t);
 uint8_t pmes_start[] = "Inicio del loop \n\r";
 uint8_t pmes_end[] = "final_del_loop \n\r";
 
+
 /* Private function prototypes -----------------------------------------------*/
 static void SystemClock_Config(void);
 static void Error_Handler(void);
@@ -74,28 +75,63 @@ int main(void) {
 
 	/* Initialize BSP Led for LED1 */
 	BSP_LED_Init(LED1);
+	BSP_LED_Init(LED2);
 
-	uart_init();
+	//uart_init();
 
-	init_adlx345();
+	//init_adlx345();
 
-	init_max7219();
+	max7219_SPI_init();
+	HAL_Delay(1000);
 
+	for (int8_t display = 0; display < 2; display++) {
+		max7219_send_data(REG_SHUTDOWN,		0x00, display);
+		max7219_send_data(REG_DECODE_MODE,  0x00, display);
+		max7219_send_data(REG_INTENSITY, 	0x03, display);
+		max7219_send_data(REG_SCAN_LIMIT, 	0x07, display);
+		max7219_send_data(REG_SHUTDOWN,		0x01, display);
+	}
 
+	max7219_send_data(REG_DIGIT_0, 0xFF, 0);
+	max7219_send_data(REG_DIGIT_1, 0x81, 0);
+	max7219_send_data(REG_DIGIT_2, 0x81, 0);
+	max7219_send_data(REG_DIGIT_3, 0xFF, 0);
+	max7219_send_data(REG_DIGIT_4, 0xFF, 0);
+	max7219_send_data(REG_DIGIT_5, 0x81, 0);
+	max7219_send_data(REG_DIGIT_6, 0x81, 0);
+	max7219_send_data(REG_DIGIT_7, 0x81, 0);
+
+	max7219_send_data(REG_DIGIT_0, 0x80, 1);
+	max7219_send_data(REG_DIGIT_1, 0x80, 1);
+	max7219_send_data(REG_DIGIT_2, 0x80, 1);
+	max7219_send_data(REG_DIGIT_3, 0x80, 1);
+	max7219_send_data(REG_DIGIT_4, 0x80, 1);
+	max7219_send_data(REG_DIGIT_5, 0x80, 1);
+	max7219_send_data(REG_DIGIT_6, 0x80, 1);
+	max7219_send_data(REG_DIGIT_7, 0xFF, 1);
+
+//
+//	send_data_SPI(REG_DIGIT_1, 0xFFmax7219_send_data
 	/* Infinite loop */
 	while (1) {
-		uart_send_string(pmes_start);
-
-		coordinates = read_coordinates();
-		xcoordinate = read_x_coordinate();
-		ycoordinate = read_y_coordinate();
-		zcoordinate = read_z_coordinate();
-
+		//HAL_GPIO_WritePin(GPIOA, GPIO_PIN_6, GPIO_PIN_SET);
+		//El chip select ESTA funcionando
+		BSP_LED_Toggle(LED1);
+		//max7219_send_data(REG_DIGIT_0, 0xFF, 0);
 		HAL_Delay(1000);
-
-		uart_send_string(pmes_end);
+//		uart_send_string(pmes_start);
+//
+//		coordinates = read_coordinates();
+//		xcoordinate = read_x_coordinate();
+//		ycoordinate = read_y_coordinate();
+//		zcoordinate = read_z_coordinate();
+//
+//		HAL_Delay(1000);
+//
+//		uart_send_string(pmes_end);
 	}
 }
+
 
 /**
  * @brief  System Clock Configuration

@@ -155,7 +155,7 @@ int16_t read_z_coordinate() {
 coordinates_t read_coordinates() {
 	uint8_t reg_data_coord = REG_DATAX0;
 	coordinates_t coord;
-	uint16_t coord_size = sizeof(coord) + sizeof(uint8_t);
+	uint16_t coord_size = sizeof(coord) / sizeof(uint8_t);
 
 	if (HAL_I2C_Master_Transmit(&hi2c1, ADXL345_ADDRESS<<1, &reg_data_coord, sizeof(reg_data_coord), 1000) != HAL_OK) {
 		uart_send_string(pmesg_error);
@@ -199,7 +199,7 @@ static uint8_t read_register(uint8_t reg) {
  */
 static void write_register(uint8_t reg, uint8_t value) {
 	 uint8_t buf[] = {reg, value};
-	 uint16_t size = sizeof(buf) + sizeof(uint8_t);
+	 uint16_t size = sizeof(buf) / sizeof(uint8_t);
 
 	if (HAL_I2C_Master_Transmit(&hi2c1, ADXL345_ADDRESS<<1, buf, size, 10000) != HAL_OK) {
 		uart_send_string(pmesg_error);
