@@ -1,7 +1,7 @@
-../Drivers/API/Src/API_accelerometer_adxl345.c:47:6:init_adlx345	40	static
-../Drivers/API/Src/API_accelerometer_adxl345.c:93:9:read_x_coordinate	24	static
-../Drivers/API/Src/API_accelerometer_adxl345.c:113:9:read_y_coordinate	24	static
-../Drivers/API/Src/API_accelerometer_adxl345.c:134:9:read_z_coordinate	24	static
-../Drivers/API/Src/API_accelerometer_adxl345.c:155:15:read_coordinates	40	static
-../Drivers/API/Src/API_accelerometer_adxl345.c:180:16:read_register	32	static
-../Drivers/API/Src/API_accelerometer_adxl345.c:200:13:write_register	32	static
+../Drivers/API/Src/API_accelerometer_adxl345.c:36:6:adlx345_init	40	static
+../Drivers/API/Src/API_accelerometer_adxl345.c:82:9:read_x_coordinate	24	static
+../Drivers/API/Src/API_accelerometer_adxl345.c:102:9:read_y_coordinate	24	static
+../Drivers/API/Src/API_accelerometer_adxl345.c:123:9:read_z_coordinate	24	static
+../Drivers/API/Src/API_accelerometer_adxl345.c:144:15:read_coordinates	40	static
+../Drivers/API/Src/API_accelerometer_adxl345.c:169:16:read_register	32	static
+../Drivers/API/Src/API_accelerometer_adxl345.c:189:13:write_register	32	static

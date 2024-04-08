@@ -20,18 +20,7 @@
 #define ADXL345_ADDRESS 	0x53
 
 //Register address
-#define	REG_DEVID			0x00
-#define REG_THRESH_ACT		0x24
-#define	REG_ACT_INACT_CTL	0x27
-#define	REG_BW_RATE			0x2C
-#define REG_POWER_CTL 		0x2D
-#define REG_DATA_FORMAT 	0x31
-#define REG_DATAX0 			0x32  //X-Axis Data 0
-#define REG_DATAX1 			0x33  //X-Axis Data 1
-#define REG_DATAY0 			0x34  //Y-Axis Data 0
-#define REG_DATAY1 			0x35  //Y-Axis Data 1
-#define REG_DATAZ0 			0x36  //Z-Axis Data 0
-#define REG_DATAZ1 			0x37  //Z-Axis Data 1
+
 
 /* Private macro -------------------------------------------------------------*/
 /* Private variables ---------------------------------------------------------*/
@@ -44,7 +33,7 @@ static uint8_t read_register(uint8_t reg);
 
 
 /* Public functions ---------------------------------------------------------*/
-void init_adlx345() {
+void adlx345_init() {
 
 	/* I2C configuration*/
 	hi2c1.Instance 				= I2C1;
@@ -155,7 +144,7 @@ int16_t read_z_coordinate() {
 coordinates_t read_coordinates() {
 	uint8_t reg_data_coord = REG_DATAX0;
 	coordinates_t coord;
-	uint16_t coord_size = sizeof(coord) / sizeof(uint8_t);
+	uint16_t coord_size = sizeof(coord)/ sizeof(uint8_t);
 
 	if (HAL_I2C_Master_Transmit(&hi2c1, ADXL345_ADDRESS<<1, &reg_data_coord, sizeof(reg_data_coord), 1000) != HAL_OK) {
 		uart_send_string(pmesg_error);

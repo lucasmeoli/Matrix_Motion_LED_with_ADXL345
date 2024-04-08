@@ -1,0 +1,93 @@
+/*
+ * API_decode_coordinates.c
+ *
+ *  Created on: Apr 8, 2024
+ *      Author: lpmeoli
+ */
+
+
+/* Includes ------------------------------------------------------------------*/
+#include <stdio.h>
+#include <stdint.h>
+#include <stdbool.h>
+
+#include "stm32f4xx_hal.h"  		/* <- HAL include */
+#include "stm32f4xx_nucleo_144.h"
+
+#include "API_uart.h"
+#include "API_accelerometer_adxl345.h"
+#include "API_max7219_led_display.h"
+
+#include "API_decode_coordinates.h"
+
+/* Private typedef -----------------------------------------------------------*/
+typedef enum {
+    CONFIGURE_MODULES,
+    READ_COORDINATES,
+    DECODE_COORDINATES,
+    DISPLAY_COORDINATES,
+} coordinatesState_t;
+
+/* Private define ------------------------------------------------------------*/
+
+/* Private macro -------------------------------------------------------------*/
+/* Private variables ---------------------------------------------------------*/
+static coordinatesState_t current_state;
+
+/* Private function prototypes -----------------------------------------------*/
+
+/* Public functions ---------------------------------------------------------*/
+void coordinates_FSM_init() {
+	current_state = CONFIGURE_MODULES;
+	rising_edge = false;
+
+	BSP_PB_Init(BUTTON_USER, BUTTON_MODE_GPIO);
+	delay_init(&debounce_timer, debounce_time);
+	if(!uart_init()){
+		FSM_error_handler();
+	}
+}
+
+void debounce_FSM_update() {
+	switch (current_state) {
+		case BUTTON_UP:
+			if(BSP_PB_GetState(BUTTON_USER)) {
+				current_state = BUTTON_FALLING;
+				uart_send_string(msg_falling_edge);
+			}
+			break;
+
+		case BUTTON_FALLING:
+			if (delay_read(&debounce_timer)) {
+				if(BSP_PB_GetState(BUTTON_USER)) {
+					current_state = BUTTON_DOWN;
+					rising_edge = true;
+				} else {
+					current_state = BUTTON_UP;
+				}
+			}
+			break;
+
+		case BUTTON_DOWN:
+			if(!BSP_PB_GetState(BUTTON_USER)) {
+				current_state = BUTTON_RAISING;
+				uart_send_string(msg_rising_edge);
+			}
+			break;
+
+		case BUTTON_RAISING:
+			if (delay_read(&debounce_timer)) {
+				if(!BSP_PB_GetState(BUTTON_USER)) {
+					current_state = BUTTON_UP;
+				} else {
+					current_state = BUTTON_DOWN;
+				}
+			}
+			break;
+
+		default:
+			FSM_error_handler();
+			break;
+	}
+}
+
