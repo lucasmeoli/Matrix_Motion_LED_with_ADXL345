@@ -36,7 +36,6 @@ static coordinatesState_t current_state;
 static coordinates_t coordinates;
 static bool_t positive;
 uint8_t coordenada_y;
-uint8_t coordenada_x;
 int indice;
 
 /* Private function prototypes -----------------------------------------------*/
@@ -52,8 +51,6 @@ void coordinates_FSM_init() {
 	}
 
 	adlx345_init();
-
-	HAL_Delay(500);
 
 	max7219_SPI_init();
 
@@ -75,6 +72,17 @@ void coordinates_FSM_update() {
 			current_state = READ_COORDINATES;
 
 
+
+			max7219_send_data(REG_DIGIT_0, 0x00, 0);
+			max7219_send_data(REG_DIGIT_1, 0x00, 0);
+			max7219_send_data(REG_DIGIT_2, 0x00, 0);
+			max7219_send_data(REG_DIGIT_3, 0x00, 0);
+			max7219_send_data(REG_DIGIT_4, 0x00, 0);
+			max7219_send_data(REG_DIGIT_5, 0x00, 0);
+			max7219_send_data(REG_DIGIT_6, 0x00, 0);
+			max7219_send_data(REG_DIGIT_7, 0x00, 0);
+
+
 			break;
 
 		case READ_COORDINATES:
@@ -92,7 +100,7 @@ void coordinates_FSM_update() {
 
 		    if (coordinates.x_coord  >= -255 && coordinates.x_coord  <= 255) {
 		        indice = (coordinates.x_coord  + 255) / 64; // Calcula el índice del valor asignado
-		        coordenada_x = indice + 1; // Asigna el valor correspondiente
+		        bit = indice + 1; // Asigna el valor correspondiente
 		    }
 
 //			if( coordinates.y_coord < 0) {
@@ -105,18 +113,11 @@ void coordinates_FSM_update() {
 			break;
 
 		case DISPLAY_COORDINATES:
-			max7219_send_data(REG_DIGIT_0, 0x00, 0);
-			max7219_send_data(REG_DIGIT_1, 0x00, 0);
-			max7219_send_data(REG_DIGIT_2, 0x00, 0);
-			max7219_send_data(REG_DIGIT_3, 0x00, 0);
-			max7219_send_data(REG_DIGIT_4, 0x00, 0);
-			max7219_send_data(REG_DIGIT_5, 0x00, 0);
-			max7219_send_data(REG_DIGIT_6, 0x00, 0);
-			max7219_send_data(REG_DIGIT_7, 0x00, 0);
 
 
 
-			max7219_send_data(coordenada_x, coordenada_y, 0);
+
+			max7219_send_data(REG_DIGIT_0, coordenada_y, 0);
 
 //			if(positive) {
 //

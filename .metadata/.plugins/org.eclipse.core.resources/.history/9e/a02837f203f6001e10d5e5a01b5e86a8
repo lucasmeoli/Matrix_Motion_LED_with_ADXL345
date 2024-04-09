@@ -62,13 +62,11 @@ void adlx345_init() {
 	 /* Peripheral clock enable */
 	__HAL_RCC_I2C1_CLK_ENABLE();
 
-	if(HAL_I2C_Init(&hi2c1) != HAL_OK) {
-		uart_send_string("Error en la INICIALIZACION \n\r");
-	}
+	HAL_I2C_Init(&hi2c1);
 
 	/* Chequeo que la direccion statica sea correcta */
 	if (read_register(REG_DEVID) != 0xE5) {
-		uart_send_string("Error primer registro \n\r");
+		uart_send_string("Error primer registro");
 	}
 
 	write_register(REG_BW_RATE, 0x08);
@@ -149,11 +147,11 @@ coordinates_t read_coordinates() {
 	uint16_t coord_size = sizeof(coord)/ sizeof(uint8_t);
 
 	if (HAL_I2C_Master_Transmit(&hi2c1, ADXL345_ADDRESS<<1, &reg_data_coord, sizeof(reg_data_coord), 1000) != HAL_OK) {
-		uart_send_string("Error de que voy a leer\n\r");
+		uart_send_string("Error de que voy a leer");
 	}
 
 	if (HAL_I2C_Master_Receive(&hi2c1, ADXL345_ADDRESS<<1, (uint8_t *) &coord, coord_size, 10000) != HAL_OK) {
-		uart_send_string("Error al lleer todas las cosas juntas\n\r");
+		uart_send_string("Error al lleer todas las cosas juntas");
 	}
 
 	return coord;

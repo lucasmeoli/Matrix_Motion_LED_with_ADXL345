@@ -1,3 +1,3 @@
-../Drivers/API/Src/API_decode_coordinates.c:46:6:coordinates_FSM_init	8	static
-../Drivers/API/Src/API_decode_coordinates.c:60:6:coordinates_FSM_update	32	static
-../Drivers/API/Src/API_decode_coordinates.c:169:13:FSM_error_handler	8	static
+../Drivers/API/Src/API_decode_coordinates.c:47:6:coordinates_FSM_init	8	static
+../Drivers/API/Src/API_decode_coordinates.c:63:6:coordinates_FSM_update	32	static
+../Drivers/API/Src/API_decode_coordinates.c:172:13:FSM_error_handler	8	static
