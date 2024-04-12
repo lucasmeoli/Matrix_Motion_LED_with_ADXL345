@@ -1,0 +1,6 @@
+../Drivers/API/Src/API_adxl345.c:35:6:adlx345_init	4
+../Drivers/API/Src/API_adxl345.c:67:6:HAL_I2C_MspInit	1
+../Drivers/API/Src/API_adxl345.c:92:15:adxl345_read_coordinates	3
+../Drivers/API/Src/API_adxl345.c:110:6:adxl345_modify_sensitivity	1
+../Drivers/API/Src/API_adxl345.c:125:16:read_register	3
+../Drivers/API/Src/API_adxl345.c:145:13:write_register	2

@@ -19,12 +19,15 @@
 #include "main.h"
 #include <stdint.h>
 #include <stdbool.h>
+
+
 #include "API_delay.h"
 #include "API_debounce.h"
 #include "API_uart.h"
-#include "API_accelerometer_adxl345.h"
-#include "API_max7219_led_display.h"
+#include "API_adxl345_sensitivity.h"
 #include "API_decode_coordinates.h"
+
+#include "API_adxl345.h"
 
 
 /* Private typedef -----------------------------------------------------------*/
@@ -54,6 +57,8 @@ static void Error_Handler(void);
  * @retval None
  */
 int main(void) {
+	delay_t button_timer;
+	uint8_t button_taps = 0;
 
 	/* STM32F4xx HAL library initialization:
        - Configure the Flash prefetch
@@ -74,13 +79,31 @@ int main(void) {
 	BSP_LED_Init(LED1);
 	BSP_LED_Init(LED2);
 
+	delay_init(&button_timer, 1000);
+
+	debounce_FSM_init(DEBOUNCE_TIME);
 	coordinates_FSM_init();
+	sensitivity_FSM_init();
+
 	HAL_Delay(1000);
 
 
 	/* Infinite loop */
 	while (1) {
+
+		debounce_FSM_update();
 		coordinates_FSM_update();
+
+		if (read_button()) {
+			button_taps++;
+		}
+
+		if(button_taps>0) {
+			if (delay_read(&button_timer)) {
+				sensitivity_FSM_update(button_taps);
+				button_taps = 0;
+			}
+		}
 	}
 }
 

@@ -12,22 +12,20 @@
 #include <stdbool.h>
 #include "stm32f4xx_nucleo_144.h" 	/* <- BSP include */
 
-
 #include "API_max7219_led_display.h"
 
 /* Private typedef -----------------------------------------------------------*/
 /* Private define ------------------------------------------------------------*/
+#define MAX_DISPLAYS 			4
+#define MAX_COORDINATE_VALUE	255
+#define MIN_COORDINATE_VALUE	-255
 
 /* Private macro -------------------------------------------------------------*/
 /* Private variables ---------------------------------------------------------*/
-
 SPI_HandleTypeDef hspi1;
 
 /* Private function prototypes -----------------------------------------------*/
-
-void HAL_SPI_MspInit(SPI_HandleTypeDef *hspi);
 /* Public functions ---------------------------------------------------------*/
-
 
 void max7219_SPI_init() {
 
@@ -44,23 +42,25 @@ void max7219_SPI_init() {
 		hspi1.Init.FirstBit				= SPI_FIRSTBIT_MSB;
 		hspi1.Init.TIMode				= SPI_TIMODE_DISABLE;
 		hspi1.Init.CRCCalculation 		= SPI_CRCCALCULATION_DISABLE;
-		hspi1.Init.CRCPolynomial 		= 10;
 
 		HAL_SPI_MspInit(&hspi1);
 		HAL_SPI_Init(&hspi1);
 
+		// Release Chip Select pin
 		HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4, GPIO_PIN_SET);
-
 	}
 }
 
 
 void max7219_send_data(uint8_t reg, uint8_t data, uint8_t display_num) {
-	uint16_t no_op = 0x0000;
 	uint16_t buf = reg<<8 | data;
+	uint16_t no_op = 0x0000;
 
+	HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4, GPIO_PIN_RESET);
 
-	HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4, GPIO_PIN_RESET); // select slave
+	for (int i = (3-display_num); i > 0; i--) {
+	    HAL_SPI_Transmit(&hspi1, (uint8_t *)&no_op, 1, 1000);
+	}
 
 	HAL_SPI_Transmit(&hspi1, (uint8_t *)&buf, 1, 1000);
 
@@ -68,13 +68,34 @@ void max7219_send_data(uint8_t reg, uint8_t data, uint8_t display_num) {
 		HAL_SPI_Transmit(&hspi1, (uint8_t *)&no_op, 1, 1000);
 	}
 
-
-
 	HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4, GPIO_PIN_SET);
 }
 
 
-/* Private functions ---------------------------------------------------------*/
+void max7219_clean_display(uint8_t display_num) {
+	max7219_send_data(REG_DIGIT_0, 0x00, display_num);
+	max7219_send_data(REG_DIGIT_1, 0x00, display_num);
+	max7219_send_data(REG_DIGIT_2, 0x00, display_num);
+	max7219_send_data(REG_DIGIT_3, 0x00, display_num);
+	max7219_send_data(REG_DIGIT_4, 0x00, display_num);
+	max7219_send_data(REG_DIGIT_5, 0x00, display_num);
+	max7219_send_data(REG_DIGIT_6, 0x00, display_num);
+	max7219_send_data(REG_DIGIT_7, 0x00, display_num);
+}
+
+
+void max7219_clean_all_displays() {
+	for (int8_t i = 0; i < MAX_DISPLAYS; i++) {
+		max7219_send_data(REG_DIGIT_0, 0x00, i);
+		max7219_send_data(REG_DIGIT_1, 0x00, i);
+		max7219_send_data(REG_DIGIT_2, 0x00, i);
+		max7219_send_data(REG_DIGIT_3, 0x00, i);
+		max7219_send_data(REG_DIGIT_4, 0x00, i);
+		max7219_send_data(REG_DIGIT_5, 0x00, i);
+		max7219_send_data(REG_DIGIT_6, 0x00, i);
+		max7219_send_data(REG_DIGIT_7, 0x00, i);
+	}
+}
 
 void HAL_SPI_MspInit(SPI_HandleTypeDef *hspi) {
 	GPIO_InitTypeDef  GPIO_InitStruct;
@@ -99,7 +120,6 @@ void HAL_SPI_MspInit(SPI_HandleTypeDef *hspi) {
 	GPIO_InitStruct.Alternate 	= GPIO_AF5_SPI1;
 	HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
-
 	/*Configure SPI CS */
 	GPIO_InitStruct.Pin 		= GPIO_PIN_4;
 	GPIO_InitStruct.Mode 		= GPIO_MODE_OUTPUT_PP;
@@ -113,9 +133,7 @@ void HAL_SPI_MspInit(SPI_HandleTypeDef *hspi) {
 	__HAL_RCC_SPI1_CLK_ENABLE();
 }
 
-
-
-
+/* Private functions ---------------------------------------------------------*/
 
 
 

@@ -11,7 +11,6 @@
 #include "stm32f4xx_nucleo_144.h"
 #include "API_delay.h"
 #include "API_debounce.h"
-#include "API_uart.h"
 #include <stdint.h>
 #include <stdbool.h>
 
@@ -25,9 +24,6 @@ typedef enum{
 
 
 /* Private define ------------------------------------------------------------*/
-#define MSG_RISING_EDGE 		"Hubo un flanco ascendente \n\r"
-#define MSG_FALLING_EDGE		"Hubo un flanco descendente \n\r"
-
 #define DEFAULT_DEBOUNCE_TIME 	40
 
 /* Private macro -------------------------------------------------------------*/
@@ -35,11 +31,7 @@ typedef enum{
 static debounceState_t current_state;
 static uint32_t debounce_time;
 static delay_t debounce_timer;
-static bool_t rising_edge;
-
-static uint8_t msg_rising_edge[] = MSG_RISING_EDGE;
-static uint8_t msg_falling_edge[] = MSG_FALLING_EDGE;
-
+static bool_t button_pressed;
 /* Private function prototypes -----------------------------------------------*/
 static void FSM_error_handler(void);
 
@@ -47,13 +39,10 @@ static void FSM_error_handler(void);
 void debounce_FSM_init(uint32_t time) {
 	current_state = BUTTON_UP;
 	debounce_time = (time == 0) ? DEFAULT_DEBOUNCE_TIME : time;
-	rising_edge = false;
+	button_pressed = false;
 
 	BSP_PB_Init(BUTTON_USER, BUTTON_MODE_GPIO);
 	delay_init(&debounce_timer, debounce_time);
-	if(!uart_init()){
-		FSM_error_handler();
-	}
 }
 
 void debounce_FSM_update() {
@@ -61,7 +50,6 @@ void debounce_FSM_update() {
 		case BUTTON_UP:
 			if(BSP_PB_GetState(BUTTON_USER)) {
 				current_state = BUTTON_FALLING;
-				uart_send_string(msg_falling_edge);
 			}
 			break;
 
@@ -69,7 +57,7 @@ void debounce_FSM_update() {
 			if (delay_read(&debounce_timer)) {
 				if(BSP_PB_GetState(BUTTON_USER)) {
 					current_state = BUTTON_DOWN;
-					rising_edge = true;
+					button_pressed = true;
 				} else {
 					current_state = BUTTON_UP;
 				}
@@ -79,7 +67,6 @@ void debounce_FSM_update() {
 		case BUTTON_DOWN:
 			if(!BSP_PB_GetState(BUTTON_USER)) {
 				current_state = BUTTON_RAISING;
-				uart_send_string(msg_rising_edge);
 			}
 			break;
 
@@ -87,6 +74,7 @@ void debounce_FSM_update() {
 			if (delay_read(&debounce_timer)) {
 				if(!BSP_PB_GetState(BUTTON_USER)) {
 					current_state = BUTTON_UP;
+					button_pressed = false;
 				} else {
 					current_state = BUTTON_DOWN;
 				}
@@ -99,11 +87,11 @@ void debounce_FSM_update() {
 	}
 }
 
-bool_t read_key() {
+bool_t read_button() {
 	bool_t return_value = false;
 
-	if (rising_edge) {
-		rising_edge = false;
+	if (button_pressed) {
+		button_pressed = false;
 		return_value = true;
 	}
 

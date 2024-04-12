@@ -1,7 +1,0 @@
-../Drivers/API/Src/API_accelerometer_adxl345.c:36:6:adlx345_init	3
-../Drivers/API/Src/API_accelerometer_adxl345.c:84:9:read_x_coordinate	3
-../Drivers/API/Src/API_accelerometer_adxl345.c:104:9:read_y_coordinate	3
-../Drivers/API/Src/API_accelerometer_adxl345.c:125:9:read_z_coordinate	3
-../Drivers/API/Src/API_accelerometer_adxl345.c:146:15:read_coordinates	3
-../Drivers/API/Src/API_accelerometer_adxl345.c:171:16:read_register	3
-../Drivers/API/Src/API_accelerometer_adxl345.c:191:13:write_register	2

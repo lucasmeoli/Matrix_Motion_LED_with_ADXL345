@@ -1,3 +1,5 @@
-../Drivers/API/Src/API_max7219_led_display.c:32:6:max7219_SPI_init	8	static
-../Drivers/API/Src/API_max7219_led_display.c:58:6:max7219_send_data	24	static
-../Drivers/API/Src/API_max7219_led_display.c:79:6:HAL_SPI_MspInit	48	static
+../Drivers/API/Src/API_max7219_led_display.c:30:6:max7219_SPI_init	8	static
+../Drivers/API/Src/API_max7219_led_display.c:55:6:max7219_send_data	32	static
+../Drivers/API/Src/API_max7219_led_display.c:75:6:max7219_clean_display	16	static
+../Drivers/API/Src/API_max7219_led_display.c:87:6:max7219_clean_all_displays	16	static
+../Drivers/API/Src/API_max7219_led_display.c:100:6:HAL_SPI_MspInit	48	static

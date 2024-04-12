@@ -7,6 +7,7 @@
 
 
 /* Includes ------------------------------------------------------------------*/
+
 #include <stdio.h>
 #include <stdint.h>
 #include <stdbool.h>
@@ -15,8 +16,8 @@
 #include "stm32f4xx_nucleo_144.h"
 
 #include "API_uart.h"
-#include "API_accelerometer_adxl345.h"
 #include "API_max7219_led_display.h"
+#include "API_adxl345.h"
 
 #include "API_decode_coordinates.h"
 
@@ -38,6 +39,7 @@ static bool_t positive;
 uint8_t coordenada_y;
 uint8_t coordenada_x;
 int indice;
+uint8_t current_display;
 
 /* Private function prototypes -----------------------------------------------*/
 static void FSM_error_handler(void);
@@ -63,86 +65,73 @@ void coordinates_FSM_init() {
 void coordinates_FSM_update() {
 	switch (current_state) {
 		case CONFIGURE_MODULES:
-			for (int8_t display = 0; display < 2; display++) {
+//			max7219_configure_displays();
+			for (int8_t display = 0; display < 4; display++) {
 				max7219_send_data(REG_SHUTDOWN,		0x00, display);
 				max7219_send_data(REG_DECODE_MODE,  0x00, display);
 				max7219_send_data(REG_INTENSITY, 	0x03, display);
 				max7219_send_data(REG_SCAN_LIMIT, 	0x07, display);
 				max7219_send_data(REG_SHUTDOWN,		0x01, display);
 			}
-
-
 			current_state = READ_COORDINATES;
-
-
 			break;
 
 		case READ_COORDINATES:
-			coordinates = read_coordinates();
+			coordinates = adxl345_read_coordinates();
+			if(coordinates.z_coord>0) {
+				current_state = DECODE_COORDINATES;
+			}
 
-			current_state = DECODE_COORDINATES;
 			break;
 
 		case DECODE_COORDINATES:
-
 		    if (coordinates.y_coord >= -255 && coordinates.y_coord <= 255) {
-		        indice = (coordinates.y_coord + 255) / 64; // Calcula el índice del bit activado
-		        coordenada_y = 1 << (7 - indice); // Enciende el bit correspondiente
+		    	if (coordinates.y_coord <= -128) {
+		    		current_display = 3;
+			        indice = (coordinates.y_coord + 255) / 16;
+			        coordenada_y = 1 << (7 - indice);
+		    	} else if (coordinates.y_coord <= 0) {
+			        indice = (coordinates.y_coord + 128) / 16;
+			        coordenada_y = 1 << (7 - indice);
+		    		current_display = 2;
+		    	} else if (coordinates.y_coord <= 128) {
+		    		current_display = 1;
+			        indice = (coordinates.y_coord) / 16;
+			        coordenada_y = 1 << (7 - indice);
+		    	} else {
+		    		current_display = 0;
+			        indice = (coordinates.y_coord -128) / 16;
+			        coordenada_y = 1 << (7 - indice);
+		    	}
+
+
+
 		    }
 
-		    if (coordinates.x_coord  >= -255 && coordinates.x_coord  <= 255) {
-		        indice = (coordinates.x_coord  + 255) / 64; // Calcula el índice del valor asignado
-		        coordenada_x = indice + 1; // Asigna el valor correspondiente
+		    if (coordinates.x_coord  >= -255 && coordinates.x_coord <= 255) {
+		        indice = (coordinates.x_coord  + 255) / 64;
+		        coordenada_x = indice + 1;
 		    }
-
-//			if( coordinates.y_coord < 0) {
-//				positive = false;
-//			} else {
-//				positive = true;
-//			}
 
 			current_state = DISPLAY_COORDINATES;
 			break;
 
 		case DISPLAY_COORDINATES:
-			max7219_send_data(REG_DIGIT_0, 0x00, 0);
-			max7219_send_data(REG_DIGIT_1, 0x00, 0);
-			max7219_send_data(REG_DIGIT_2, 0x00, 0);
-			max7219_send_data(REG_DIGIT_3, 0x00, 0);
-			max7219_send_data(REG_DIGIT_4, 0x00, 0);
-			max7219_send_data(REG_DIGIT_5, 0x00, 0);
-			max7219_send_data(REG_DIGIT_6, 0x00, 0);
-			max7219_send_data(REG_DIGIT_7, 0x00, 0);
+			max7219_clean_all_displays();
 
-
-
-			max7219_send_data(coordenada_x, coordenada_y, 0);
-
-//			if(positive) {
+			max7219_send_data(coordenada_x, coordenada_y, current_display);
+//			if (coordinates.y_coord > 0) {
+//				//TODO tener en cuenta que podria hacer un clear displkay que mande todo de una bajando una sola vez el CS+
 //
-//				//uart_send_string("Negativo\n\r");
-//
-//				max7219_send_data(REG_DIGIT_0, 0xFF, 0);
-////				max7219_send_data(REG_DIGIT_1, 0xFF, 0);
-////				max7219_send_data(REG_DIGIT_2, 0xFF, 0);
-////				max7219_send_data(REG_DIGIT_3, 0xFF, 0);
-////				max7219_send_data(REG_DIGIT_4, 0x00, 0);
-////				max7219_send_data(REG_DIGIT_5, 0x00, 0);
-////				max7219_send_data(REG_DIGIT_6, 0x00, 0);
-////				max7219_send_data(REG_DIGIT_7, 0x00, 0);
-//
+//				// Pensar si aca agregho un changin o no y que ahi se entre el update changin machine dependiendo de si se toco el pulsador o no
+//				max7219_send_data(coordenada_x, coordenada_y, 2);
 //
 //			} else {
-//				//uart_send_string("Positivo\n\r");
+//				//TODO tener en cuenta que podria hacer un clear displkay que mande todo de una bajando una sola vez el CS
 //
-//				max7219_send_data(REG_DIGIT_0, 0x00, 0);
-////				max7219_send_data(REG_DIGIT_1, 0x00, 0);
-////				max7219_send_data(REG_DIGIT_2, 0x00, 0);
-////				max7219_send_data(REG_DIGIT_3, 0x00, 0);
-////				max7219_send_data(REG_DIGIT_4, 0xFF, 0);
-////				max7219_send_data(REG_DIGIT_5, 0xFF, 0);
-////				max7219_send_data(REG_DIGIT_6, 0xFF, 0);
-////				max7219_send_data(REG_DIGIT_7, 0xFF, 0);
+//				// Pensar si aca agregho un changin o no y que ahi se entre el update changin machine dependiendo de si se toco el pulsador o no
+//
+//
 //
 //			}
 

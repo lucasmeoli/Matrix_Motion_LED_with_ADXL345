@@ -1,13 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
-		<item key="selection" value="HAL_SPI_Transmit"/>
+		<item key="selection" value="rising_edge"/>
 		<item key="wrap" value="true"/>
 		<item key="casesensitive" value="false"/>
 		<item key="wholeword" value="false"/>
 		<item key="incremental" value="false"/>
 		<item key="isRegEx" value="false"/>
 		<list key="findhistory">
+			<item value="rising_edge"/>
+			<item value="uart"/>
+			<item value="uarts"/>
+			<item value="fallin"/>
 			<item value="HAL_SPI_Transmit"/>
 			<item value="HAL_SPI_MspInit"/>
 			<item value="SPI_Init"/>
@@ -19,10 +23,6 @@
 			<item value="SPI_TI_mode"/>
 			<item value="SPI_MSB_LSB_transmission"/>
 			<item value="SPI_CRC_Calculation"/>
-			<item value="SPI_Clock_Phase"/>
-			<item value="SPI_Clock_Polarity"/>
-			<item value="SPI_Data_Size"/>
-			<item value="SPI_Mode"/>
 		</list>
 		<list key="replacehistory">
 		</list>
