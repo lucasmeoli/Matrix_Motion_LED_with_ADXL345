@@ -25,28 +25,23 @@
 #include "API_uart.h"
 #include "API_adxl345_sensitivity.h"
 #include "API_decode_coordinates.h"
-
 #include "API_adxl345.h"
 #include "API_max7219.h"
 
 /* Private typedef -----------------------------------------------------------*/
 /* Private define ------------------------------------------------------------*/
 #define DEBOUNCE_TIME		40
-#define TIMER_BLINK_100MS	100
-#define TIMER_BLINK_500MS	500
+#define BUTTON_TAPS_TIME	1000 // Time after pressing the button for a possible second press.
 
 /* Private macro -------------------------------------------------------------*/
 /* Private variables ---------------------------------------------------------*/
-uint32_t blink_timers [] = {TIMER_BLINK_100MS, TIMER_BLINK_500MS};
-uint32_t size_blink_timers = sizeof(blink_timers)/sizeof(uint32_t);
-
-
-/* Private function prototypes -----------------------------------------------*/
+/* Private functions ---------------------------------------------------------*/
 static void SystemClock_Config(void);
 static void Error_Handler(void);
 static void communication_peripherals_init(void);
 static void FSM_init(void);
-/* Private functions ---------------------------------------------------------*/
+
+/* Public functions ----------------------------------------------------------*/
 
 /**
  * @brief  Main program
@@ -83,7 +78,7 @@ int main(void) {
 	FSM_init();
 
 	/* Initialize delay timer for button taps*/
-	delay_init(&button_timer, 1000);
+	delay_init(&button_timer, BUTTON_TAPS_TIME);
 
 	/* Infinite loop */
 	while (1) {
@@ -105,6 +100,14 @@ int main(void) {
 }
 
 
+/**
+  * @brief  This function initializes the Finite State Machines (FSM) used in the main program.
+  *         It includes initialization of the debounce FSM with a specified debounce time,
+  *         as well as the sensitivity FSM and the coordinates FSM.
+  *         If initialization of any FSM fails, Error_Handler() is called.
+  * @param  None
+  * @retval None
+  */
 static void FSM_init(void) {
 
 	debounce_FSM_init(DEBOUNCE_TIME);
@@ -119,6 +122,13 @@ static void FSM_init(void) {
 
 }
 
+
+/**
+  * @brief  Initializes initializes UART,I2C for ADXL345, and SPI for MAX7219.
+  *         If initialization of any peripheral fails, Error_Handler() is called.
+  * @param  None
+  * @retval None
+  */
 static void communication_peripherals_init(void) {
 	if (!uart_init()) {
 		Error_Handler();

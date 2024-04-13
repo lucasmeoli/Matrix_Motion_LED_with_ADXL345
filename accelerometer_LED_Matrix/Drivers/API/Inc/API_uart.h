@@ -30,8 +30,13 @@ typedef bool bool_t;
 */
 bool_t uart_init();
 
+/**
+  * @brief  Get the current state of the UART communication interface.
+  *
+  * @param  None
+  * @retval HAL_UART_StateTypeDef - Current state of the UART communication.
+  */
 HAL_UART_StateTypeDef uart_get_state();
-
 
 /**
  * @brief Sends a string through UART communication in blocking mode.
@@ -41,7 +46,6 @@ HAL_UART_StateTypeDef uart_get_state();
  * @retval None
 */
 void uart_send_string(uint8_t * pstring);
-
 
 /**
  * @brief Sends a string with specified size through UART communication
@@ -65,6 +69,5 @@ void uart_send_string_size(uint8_t * pstring, uint16_t size);
  * @retval None
 */
 void uart_receive_string_size(uint8_t * pstring, uint16_t size);
-
 
 #endif /* API_INC_API_UART_H_ */

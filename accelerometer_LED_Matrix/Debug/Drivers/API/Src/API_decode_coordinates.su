@@ -1,7 +1,7 @@
-../Drivers/API/Src/API_decode_coordinates.c:66:8:coordinates_FSM_init	16	static
-../Drivers/API/Src/API_decode_coordinates.c:83:6:coordinates_FSM_update	24	static
-../Drivers/API/Src/API_decode_coordinates.c:129:13:configure_adxl345	8	static
-../Drivers/API/Src/API_decode_coordinates.c:135:13:configure_max7219	16	static
-../Drivers/API/Src/API_decode_coordinates.c:146:13:decode_x_coordinate	4	static
-../Drivers/API/Src/API_decode_coordinates.c:153:13:decode_y_coordinate	16	static
-../Drivers/API/Src/API_decode_coordinates.c:179:13:FSM_error_handler	8	static
+../Drivers/API/Src/API_decode_coordinates.c:74:8:coordinates_FSM_init	16	static
+../Drivers/API/Src/API_decode_coordinates.c:96:6:coordinates_FSM_update	24	static
+../Drivers/API/Src/API_decode_coordinates.c:141:13:configure_adxl345	8	static
+../Drivers/API/Src/API_decode_coordinates.c:147:13:configure_max7219	16	static
+../Drivers/API/Src/API_decode_coordinates.c:159:13:send_coordinates_uart	16	static
+../Drivers/API/Src/API_decode_coordinates.c:174:15:decode_x_coordinate	4	static
+../Drivers/API/Src/API_decode_coordinates.c:183:15:decode_y_coordinate	16	static

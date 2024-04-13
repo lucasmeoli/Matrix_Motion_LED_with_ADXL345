@@ -23,11 +23,16 @@ typedef enum{
 	SENSITIVITY_8G		= 0x02,
 	SENSITIVITY_16G		= 0x03,
 } sensitivityState_t;
+
 /* Private define ------------------------------------------------------------*/
 #define	MSG_2G_SENSITIVITY 	"Sensitivity ± 2g \n\r"
 #define	MSG_4G_SENSITIVITY 	"Sensitivity ± 4g \n\r"
 #define	MSG_8G_SENSITIVITY 	"Sensitivity ± 8g \n\r"
 #define	MSG_16G_SENSITIVITY "Sensitivity ± 16g \n\r"
+
+#define SENSITIVITY_UP_TAPS 		1
+#define SENSITIVITY_DOWN_TAPS 		2
+
 /* Private macro -------------------------------------------------------------*/
 /* Private variables ---------------------------------------------------------*/
 static uint8_t msg_2g[]  = MSG_2G_SENSITIVITY;
@@ -38,8 +43,6 @@ static uint8_t msg_16g[] = MSG_16G_SENSITIVITY;
 static sensitivityState_t current_state;
 
 /* Private function prototypes -----------------------------------------------*/
-static void FSM_error_handler(void);
-
 /* Public functions ---------------------------------------------------------*/
 bool_t sensitivity_FSM_init() {
 	current_state = SENSITIVITY_2G;
@@ -54,19 +57,21 @@ bool_t sensitivity_FSM_init() {
 void sensitivity_FSM_update(uint8_t taps) {
 	switch (current_state) {
 		case SENSITIVITY_2G:
-			if (taps == 2) {
+			if (taps == SENSITIVITY_DOWN_TAPS) {
 				adxl345_set_sensitivity(RESOLUTION_4G);
 				current_state = SENSITIVITY_4G;
 				uart_send_string(msg_4g);
+			} else if (taps == SENSITIVITY_UP_TAPS) {
+				uart_send_string(msg_2g);
 			}
 			break;
 
 		case SENSITIVITY_4G:
-			if (taps == 2) {
+			if (taps == SENSITIVITY_DOWN_TAPS) {
 				adxl345_set_sensitivity(RESOLUTION_8G);
 				current_state = SENSITIVITY_8G;
 				uart_send_string(msg_8g);
-			} else if (taps == 1) {
+			} else if (taps == SENSITIVITY_UP_TAPS) {
 				adxl345_set_sensitivity(RESOLUTION_2G);
 				current_state = SENSITIVITY_2G;
 				uart_send_string(msg_2g);
@@ -74,11 +79,11 @@ void sensitivity_FSM_update(uint8_t taps) {
 			break;
 
 		case SENSITIVITY_8G:
-			if (taps == 2) {
+			if (taps == SENSITIVITY_DOWN_TAPS) {
 				adxl345_set_sensitivity(RESOLUTION_16G);
 				current_state = SENSITIVITY_16G;
 				uart_send_string(msg_16g);
-			} else if (taps == 1) {
+			} else if (taps == SENSITIVITY_UP_TAPS) {
 				adxl345_set_sensitivity(RESOLUTION_4G);
 				current_state = SENSITIVITY_4G;
 				uart_send_string(msg_4g);
@@ -86,7 +91,9 @@ void sensitivity_FSM_update(uint8_t taps) {
 			break;
 
 		case SENSITIVITY_16G:
-			if (taps == 1) {
+			if (taps == SENSITIVITY_DOWN_TAPS) {
+				uart_send_string(msg_16g);
+			} else if (taps == SENSITIVITY_UP_TAPS) {
 				adxl345_set_sensitivity(RESOLUTION_8G);
 				current_state = SENSITIVITY_8G;
 				uart_send_string(msg_8g);
@@ -94,24 +101,9 @@ void sensitivity_FSM_update(uint8_t taps) {
 			break;
 
 		default:
-			FSM_error_handler();
+			// Should never reach here. In that case go to initial state
+			current_state = SENSITIVITY_2G;
 			break;
-	}
-}
-
-
-/**
- * @brief  This function is executed in case of error occurrence.
- *
- * @param  None
- * @retval None
- */
-static void FSM_error_handler(void) {
-	/* Turn LED2 on */
-	BSP_LED_Init(LED2);
-	BSP_LED_On(LED2);
-	while (1)
-	{
 	}
 }
 

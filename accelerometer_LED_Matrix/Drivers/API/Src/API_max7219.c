@@ -17,13 +17,11 @@
 /* Private typedef -----------------------------------------------------------*/
 /* Private define ------------------------------------------------------------*/
 #define MAX_DISPLAYS 			4
-#define MAX_COORDINATE_VALUE	255
-#define MIN_COORDINATE_VALUE	-255
 
 /* Private macro -------------------------------------------------------------*/
 /* Private variables ---------------------------------------------------------*/
-SPI_HandleTypeDef hspi1;
-
+static SPI_HandleTypeDef hspi1;
+static uint8_t active_displays = MAX_DISPLAYS; // Set max as default
 /* Private function prototypes -----------------------------------------------*/
 /* Public functions ---------------------------------------------------------*/
 
@@ -60,6 +58,14 @@ bool_t max7219_SPI_init() {
 }
 
 
+void max7219_set_displays(uint8_t total_displays) {
+	if (total_displays > MAX_DISPLAYS) {
+		active_displays = MAX_DISPLAYS;
+	} else {
+		active_displays = total_displays;
+	}
+}
+
 HAL_SPI_StateTypeDef max7219_get_SPI_state() {
 	return HAL_SPI_GetState(&hspi1);
 }
@@ -67,11 +73,15 @@ HAL_SPI_StateTypeDef max7219_get_SPI_state() {
 
 void max7219_send_data(uint8_t reg, uint8_t data, uint8_t display_num) {
 	uint16_t buf = reg<<8 | data;
-	uint16_t no_op = 0x0000;
+	uint16_t no_op = 0;
+
+	if (display_num >= active_displays) {
+		return;
+	}
 
 	HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4, GPIO_PIN_RESET);
 
-	for (int i = (3-display_num); i > 0; i--) {
+	for (uint8_t i = ((active_displays-1)-display_num); i > 0; i--) {
 	    HAL_SPI_Transmit(&hspi1, (uint8_t *)&no_op, 1, 1000);
 	}
 
@@ -86,6 +96,10 @@ void max7219_send_data(uint8_t reg, uint8_t data, uint8_t display_num) {
 
 
 void max7219_clean_display(uint8_t display_num) {
+	if (display_num >= active_displays) {
+		return;
+	}
+
 	max7219_send_data(REG_DIGIT_0, 0x00, display_num);
 	max7219_send_data(REG_DIGIT_1, 0x00, display_num);
 	max7219_send_data(REG_DIGIT_2, 0x00, display_num);
@@ -98,7 +112,7 @@ void max7219_clean_display(uint8_t display_num) {
 
 
 void max7219_clean_all_displays() {
-	for (int8_t i = 0; i < MAX_DISPLAYS; i++) {
+	for (uint8_t i = 0; i < MAX_DISPLAYS; i++) {
 		max7219_send_data(REG_DIGIT_0, 0x00, i);
 		max7219_send_data(REG_DIGIT_1, 0x00, i);
 		max7219_send_data(REG_DIGIT_2, 0x00, i);

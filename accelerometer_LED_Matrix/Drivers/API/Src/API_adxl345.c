@@ -11,20 +11,34 @@
 #include <stdbool.h>
 #include "stm32f4xx_hal.h"
 #include "stm32f4xx_nucleo_144.h"
-#include "API_uart.h"
 
 #include "API_adxl345.h"
 
 /* Private typedef -----------------------------------------------------------*/
+typedef enum {
+	REG_DEVID			= 0x00,
+	REG_THRESH_ACT		= 0x24,
+	REG_ACT_INACT_CTL	= 0x27,
+	REG_BW_RATE			= 0x2C,
+	REG_POWER_CTL 		= 0x2D,
+	REG_INT_SOURCE		= 0x30,
+	REG_DATA_FORMAT 	= 0x31,
+	REG_DATAX0 			= 0x32,
+	REG_DATAX1 			= 0x33,
+	REG_DATAY0 			= 0x34,
+	REG_DATAY1 			= 0x35,
+	REG_DATAZ0 			= 0x36,
+	REG_DATAZ1 			= 0x37,
+} adxl345_register_t;
+
 /* Private define ------------------------------------------------------------*/
 #define ADXL345_ADDRESS 	0x53
 #define CLOCK_SPEED			100000	// This parameter must be set to a value lower than 400kHz
 #define REGISTER_DEVID		0xE5
-
+#define MASK_DATA_READY		0x80
 
 /* Private macro -------------------------------------------------------------*/
 /* Private variables ---------------------------------------------------------*/
-static uint8_t pmesg_error[] = "ERROR!!!!! \n\r";
 static I2C_HandleTypeDef hi2c1;
 
 /* Private function prototypes -----------------------------------------------*/
@@ -41,7 +55,6 @@ static uint8_t read_register(uint8_t reg);
 DEFINE_ADXL345_REGISTER_FUNCTION(BW_RATE, REG_BW_RATE)
 DEFINE_ADXL345_REGISTER_FUNCTION(POWER_CTL, REG_POWER_CTL)
 DEFINE_ADXL345_REGISTER_FUNCTION(DATA_FORMAT, REG_DATA_FORMAT)
-
 
 
 bool_t adlx345_I2C_init() {
@@ -72,6 +85,7 @@ bool_t adlx345_I2C_init() {
 	return return_value;
 }
 
+
 void HAL_I2C_MspInit(I2C_HandleTypeDef *hi2c1) {
 	GPIO_InitTypeDef GPIO_InitStruct;
 
@@ -90,28 +104,22 @@ void HAL_I2C_MspInit(I2C_HandleTypeDef *hi2c1) {
 	__HAL_RCC_I2C1_CLK_ENABLE();
 }
 
-HAL_I2C_StateTypeDef adxl345_get_I2C_state() {
-	return HAL_I2C_GetState(&hi2c1);
-}
-
-
 
 coordinates_t adxl345_read_coordinates() {
 	uint8_t reg_data_coord = REG_DATAX0;
 	coordinates_t coord;
 	uint16_t coord_size = sizeof(coord)/ sizeof(uint8_t);
 
-	if (HAL_I2C_Master_Transmit(&hi2c1, ADXL345_ADDRESS<<1, &reg_data_coord, sizeof(reg_data_coord), 1000) != HAL_OK) {
-		uart_send_string("Error de que voy a leer\n\r");
-	}
-
-	if (HAL_I2C_Master_Receive(&hi2c1, ADXL345_ADDRESS<<1, (uint8_t *) &coord, coord_size, 10000) != HAL_OK) {
-		uart_send_string("Error al lleer todas las cosas juntas\n\r");
-	}
+	HAL_I2C_Master_Transmit(&hi2c1, ADXL345_ADDRESS<<1, &reg_data_coord, sizeof(reg_data_coord), 1000);
+	HAL_I2C_Master_Receive(&hi2c1, ADXL345_ADDRESS<<1, (uint8_t *) &coord, coord_size, 10000);
 
 	return coord;
 }
 
+
+HAL_I2C_StateTypeDef adxl345_get_I2C_state() {
+	return HAL_I2C_GetState(&hi2c1);
+}
 
 
 void adxl345_set_sensitivity(adxl345_sensitivity_t sensitivity) {
@@ -125,6 +133,20 @@ void adxl345_set_sensitivity(adxl345_sensitivity_t sensitivity) {
 }
 
 
+bool_t adxl345_is_data_ready() {
+	uint8_t reg = REG_INT_SOURCE;
+	uint8_t value;
+
+	HAL_I2C_Master_Transmit(&hi2c1, ADXL345_ADDRESS<<1, &reg, sizeof(reg), 10000);
+	HAL_I2C_Master_Receive(&hi2c1, ADXL345_ADDRESS<<1, &value, sizeof(value), 10000);
+
+	if (value&MASK_DATA_READY) {
+		return true;
+	} else {
+		return false;
+	}
+}
+
 
 /* Private functions ---------------------------------------------------------*/
 
@@ -136,12 +158,8 @@ void adxl345_set_sensitivity(adxl345_sensitivity_t sensitivity) {
 static uint8_t read_register(uint8_t reg) {
 	uint8_t value;
 
-	if (HAL_I2C_Master_Transmit(&hi2c1, ADXL345_ADDRESS<<1, &reg, sizeof(reg), 10000) != HAL_OK) {
-		uart_send_string(pmesg_error);
-	}
-	if (HAL_I2C_Master_Receive(&hi2c1, ADXL345_ADDRESS<<1, &value, sizeof(value), 10000) != HAL_OK) {
-		uart_send_string(pmesg_error);
-	}
+	HAL_I2C_Master_Transmit(&hi2c1, ADXL345_ADDRESS<<1, &reg, sizeof(reg), 10000);
+	HAL_I2C_Master_Receive(&hi2c1, ADXL345_ADDRESS<<1, &value, sizeof(value), 10000);
 
 	return value;
 }
@@ -157,9 +175,7 @@ static void write_register(uint8_t reg, uint8_t value) {
 	 uint8_t buf[] = {reg, value};
 	 uint16_t size = sizeof(buf) / sizeof(uint8_t);
 
-	if (HAL_I2C_Master_Transmit(&hi2c1, ADXL345_ADDRESS<<1, buf, size, 10000) != HAL_OK) {
-		uart_send_string(pmesg_error);
-	}
+	 HAL_I2C_Master_Transmit(&hi2c1, ADXL345_ADDRESS<<1, buf, size, 10000);
 }
 
 

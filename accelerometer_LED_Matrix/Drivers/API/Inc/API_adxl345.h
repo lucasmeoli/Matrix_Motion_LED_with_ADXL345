@@ -18,21 +18,6 @@ typedef struct {
 } coordinates_t;
 
 typedef enum {
-	REG_DEVID			= 0x00,
-	REG_THRESH_ACT		= 0x24,
-	REG_ACT_INACT_CTL	= 0x27,
-	REG_BW_RATE			= 0x2C,
-	REG_POWER_CTL 		= 0x2D,
-	REG_DATA_FORMAT 	= 0x31,
-	REG_DATAX0 			= 0x32, //X-Axis Data 0
-	REG_DATAX1 			= 0x33, //X-Axis Data 1
-	REG_DATAY0 			= 0x34, //Y-Axis Data 0
-	REG_DATAY1 			= 0x35, //Y-Axis Data 1
-	REG_DATAZ0 			= 0x36, //Z-Axis Data 0
-	REG_DATAZ1 			= 0x37, //Z-Axis Data 1
-} adxl345_register_t;
-
-typedef enum {
 	RESOLUTION_2G		= 0x00,
 	RESOLUTION_4G		= 0x01,
 	RESOLUTION_8G		= 0x02,
@@ -40,7 +25,18 @@ typedef enum {
 } adxl345_sensitivity_t;
 
 
+/* Exported functions ------------------------------------------------------- */
 
+/**
+  * @brief  Initializes the I2C1 communication interface with the ADXL345 accelerometer.
+  *         This function configures the I2C1 peripheral for communication with the ADXL345 accelerometer.
+  *         It sets the clock speed to 100 kHz and the addressing mode to 7 bits.
+  *         If the I2C1 peripheral is in RESET state, it configures the peripheral with specified parameters.
+  *         After initialization, it verifies communication by reading the static device ID register.
+  *
+  * @param  None
+  * @retval bool_t - TRUE if initialization is successful or if it has already been initialized successfully; FALSE otherwise.
+  */
 bool_t adlx345_I2C_init();
 
 /**
@@ -51,7 +47,11 @@ bool_t adlx345_I2C_init();
  */
 coordinates_t adxl345_read_coordinates();
 
-
+/**
+  * @brief  Get the current state of the I2C communication interface with ADXL345.
+  * @param  None
+  * @retval HAL_I2C_StateTypeDef - Current state of the I2C communication.
+  */
 HAL_I2C_StateTypeDef adxl345_get_I2C_state();
 
 /**
@@ -63,9 +63,32 @@ HAL_I2C_StateTypeDef adxl345_get_I2C_state();
  */
 void adxl345_set_sensitivity(adxl345_sensitivity_t sensitivity);
 
+/**
+  * @brief  Checks if data is ready to be read from the ADXL345 accelerometer.
+  * @param  None
+  * @retval bool_t - TRUE if data is ready, FALSE otherwise.
+  */
+bool_t adxl345_is_data_ready();
 
+/**
+  * @brief  Sets the Bandwidth Rate register of the ADXL345 accelerometer.
+  * @param  value: The value to be written to the register.
+  * @retval None
+  */
 void adxl345_set_BW_RATE(uint8_t value);
+
+/**
+  * @brief  Sets the Power Control register of the ADXL345 accelerometer.
+  * @param  value: The value to be written to the register.
+  * @retval None
+  */
 void adxl345_set_POWER_CTL(uint8_t value);
+
+/**
+  * @brief  Sets the Data Format register of the ADXL345 accelerometer.
+  * @param  value: The value to be written to the register.
+  * @retval None
+  */
 void adxl345_set_DATA_FORMAT(uint8_t value);
 
 

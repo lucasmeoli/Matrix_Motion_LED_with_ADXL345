@@ -1,3 +1,2 @@
-../Drivers/API/Src/API_adlx345_sensitivity.c:44:8:sensitivity_FSM_init	16	static
-../Drivers/API/Src/API_adlx345_sensitivity.c:54:6:sensitivity_FSM_update	16	static
-../Drivers/API/Src/API_adlx345_sensitivity.c:109:13:FSM_error_handler	8	static
+../Drivers/API/Src/API_adlx345_sensitivity.c:47:8:sensitivity_FSM_init	16	static
+../Drivers/API/Src/API_adlx345_sensitivity.c:57:6:sensitivity_FSM_update	16	static

@@ -22,6 +22,9 @@
 /* Definition for USARTx clock resources */
 #define USARTx          USART3
 #define BAUDRATE		115200
+#define WORDLENGTH		UART_WORDLENGTH_8B
+#define STOP_BITS		UART_STOPBITS_1
+#define PARITY			UART_PARITY_NONE
 #define MSG_UART_INIT	"UART initiated. Configuration: 115200 - 8O1 \n\r"
 
 /* Private macro -------------------------------------------------------------*/
@@ -38,9 +41,9 @@ bool_t uart_init() {
 		// Init UART only if it was not initialized before
 		UartHandle.Instance        		= USARTx;
 		UartHandle.Init.BaudRate   		= BAUDRATE;
-		UartHandle.Init.WordLength		= UART_WORDLENGTH_8B;
-		UartHandle.Init.StopBits   		= UART_STOPBITS_1;
-		UartHandle.Init.Parity     		= UART_PARITY_NONE;
+		UartHandle.Init.WordLength		= WORDLENGTH;
+		UartHandle.Init.StopBits   		= STOP_BITS;
+		UartHandle.Init.Parity     		= PARITY;
 		UartHandle.Init.HwFlowCtl  		= UART_HWCONTROL_NONE;
 		UartHandle.Init.Mode       		= UART_MODE_TX_RX;
 		UartHandle.Init.OverSampling 	= UART_OVERSAMPLING_16;
