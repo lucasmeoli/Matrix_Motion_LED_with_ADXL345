@@ -1,13 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
-		<item key="selection" value="rising_edge"/>
+		<item key="selection" value="positive"/>
 		<item key="wrap" value="true"/>
 		<item key="casesensitive" value="false"/>
 		<item key="wholeword" value="false"/>
 		<item key="incremental" value="false"/>
 		<item key="isRegEx" value="false"/>
 		<list key="findhistory">
+			<item value="REG_DATA_FORMAT"/>
+			<item value="positive"/>
+			<item value="coordenada_y"/>
+			<item value="pmesg_error"/>
 			<item value="rising_edge"/>
 			<item value="uart"/>
 			<item value="uarts"/>
@@ -19,17 +23,13 @@
 			<item value="__HAL_RCC_SPI1"/>
 			<item value="__HAL_RCC_SPI"/>
 			<item value="HAL_SPI_MODULE_ENABLED"/>
-			<item value="SPI_Slave_Select_management"/>
-			<item value="SPI_TI_mode"/>
-			<item value="SPI_MSB_LSB_transmission"/>
-			<item value="SPI_CRC_Calculation"/>
 		</list>
 		<list key="replacehistory">
 		</list>
 	</section>
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">
-		<item key="DIALOG_X_ORIGIN" value="2209"/>
-		<item key="DIALOG_Y_ORIGIN" value="471"/>
+		<item key="DIALOG_X_ORIGIN" value="1239"/>
+		<item key="DIALOG_Y_ORIGIN" value="232"/>
 		<item key="DIALOG_WIDTH" value="321"/>
 		<item key="DIALOG_HEIGHT" value="438"/>
 		<item key="DIALOG_FONT_NAME" value="1|Ubuntu|11.0|0|GTK|1|"/>

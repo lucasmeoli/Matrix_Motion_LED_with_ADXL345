@@ -3,12 +3,17 @@
  *
  *  Created on: Mar 30, 2024
  *      Author: lpmeoli
+ *
+ * Description:
  */
-
+/* Define to prevent recursive inclusion -------------------------------------*/
 #ifndef API_INC_API_UART_H_
 #define API_INC_API_UART_H_
 
+/* Exported types ------------------------------------------------------------*/
 typedef bool bool_t;
+
+/* Exported functions --------------------------------------------------------*/
 
 /**
  * @brief  Configure the UART peripheral as 115200 - 8N1
@@ -19,9 +24,13 @@ typedef bool bool_t;
  *         		- BaudRate    = 115200 baud
  *         		- Hardware flow control disabled (RTS and CTS signals)
  * @param  None
- * @retval None
- */
+ * @retval Boolean value indicating whether UART was initialized.
+ *         If it was previously initialized by another module and it is
+ *         operational, it will also return true.
+*/
 bool_t uart_init();
+
+HAL_UART_StateTypeDef uart_get_state();
 
 
 /**

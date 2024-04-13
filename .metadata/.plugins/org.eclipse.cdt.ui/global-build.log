@@ -1,4 +1,4 @@
-22:30:17 **** Incremental Build of configuration Debug for project accelerometer_LED_Matrix ****
+13:17:01 **** Incremental Build of configuration Debug for project accelerometer_LED_Matrix ****
 make -j16 all 
 arm-none-eabi-gcc "../Drivers/API/Src/API_decode_coordinates.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DSTM32 -DSTM32F429ZITx -DSTM32F4 -DNUCLEO_F429ZI -DUSE_HAL_DRIVER -DSTM32F429xx -c -I../Inc -I"/home/lpmeoli/Especializacion/trabajos_practicos/bimestre_01/PdC_Workspace/accelerometer_LED_Matrix/Drivers/STM32F4xx_HAL_Driver/Inc" -I"/home/lpmeoli/Especializacion/trabajos_practicos/bimestre_01/PdC_Workspace/accelerometer_LED_Matrix/Drivers/CMSIS/Include" -I"/home/lpmeoli/Especializacion/trabajos_practicos/bimestre_01/PdC_Workspace/accelerometer_LED_Matrix/Drivers/CMSIS/Device/ST/STM32F4xx/Include" -I"/home/lpmeoli/Especializacion/trabajos_practicos/bimestre_01/PdC_Workspace/accelerometer_LED_Matrix/Drivers/BSP/STM32F4xx_Nucleo_144" -I"/home/lpmeoli/Especializacion/trabajos_practicos/bimestre_01/PdC_Workspace/accelerometer_LED_Matrix/Drivers/Core/Inc" -I"/home/lpmeoli/Especializacion/trabajos_practicos/bimestre_01/PdC_Workspace/accelerometer_LED_Matrix/Drivers/API" -I"/home/lpmeoli/Especializacion/trabajos_practicos/bimestre_01/PdC_Workspace/accelerometer_LED_Matrix/Drivers/API/Inc" -I"/home/lpmeoli/Especializacion/trabajos_practicos/bimestre_01/PdC_Workspace/accelerometer_LED_Matrix/Drivers/API/Src" -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Drivers/API/Src/API_decode_coordinates.d" -MT"Drivers/API/Src/API_decode_coordinates.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Drivers/API/Src/API_decode_coordinates.o"
 arm-none-eabi-gcc -o "accelerometer_LED_Matrix.elf" @"objects.list"   -mcpu=cortex-m4 -T"/home/lpmeoli/Especializacion/trabajos_practicos/bimestre_01/PdC_Workspace/accelerometer_LED_Matrix/STM32F429ZITX_FLASH.ld" --specs=nosys.specs -Wl,-Map="accelerometer_LED_Matrix.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
@@ -7,28 +7,7 @@ Finished building target: accelerometer_LED_Matrix.elf
 arm-none-eabi-size  accelerometer_LED_Matrix.elf 
 arm-none-eabi-objdump -h -S accelerometer_LED_Matrix.elf  > "accelerometer_LED_Matrix.list"
    text	   data	    bss	    dec	    hex	filename
-  17196	     96	   1856	  19148	   4acc	accelerometer_LED_Matrix.elf
-Finished building: default.size.stdout
- 
-Finished building: accelerometer_LED_Matrix.list
- 
-22:30:20 **** Incremental Build of configuration Debug for project accelerometer_LED_Matrix ****
-make -j16 all 
-arm-none-eabi-size  accelerometer_LED_Matrix.elf 
-   text	   data	    bss	    dec	    hex	filename
-  17196	     96	   1856	  19148	   4acc	accelerometer_LED_Matrix.elf
-Finished building: default.size.stdout
- 
-22:32:04 **** Incremental Build of configuration Debug for project accelerometer_LED_Matrix ****
-make -j16 all 
-arm-none-eabi-gcc "../Drivers/API/Src/API_decode_coordinates.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DSTM32 -DSTM32F429ZITx -DSTM32F4 -DNUCLEO_F429ZI -DUSE_HAL_DRIVER -DSTM32F429xx -c -I../Inc -I"/home/lpmeoli/Especializacion/trabajos_practicos/bimestre_01/PdC_Workspace/accelerometer_LED_Matrix/Drivers/STM32F4xx_HAL_Driver/Inc" -I"/home/lpmeoli/Especializacion/trabajos_practicos/bimestre_01/PdC_Workspace/accelerometer_LED_Matrix/Drivers/CMSIS/Include" -I"/home/lpmeoli/Especializacion/trabajos_practicos/bimestre_01/PdC_Workspace/accelerometer_LED_Matrix/Drivers/CMSIS/Device/ST/STM32F4xx/Include" -I"/home/lpmeoli/Especializacion/trabajos_practicos/bimestre_01/PdC_Workspace/accelerometer_LED_Matrix/Drivers/BSP/STM32F4xx_Nucleo_144" -I"/home/lpmeoli/Especializacion/trabajos_practicos/bimestre_01/PdC_Workspace/accelerometer_LED_Matrix/Drivers/Core/Inc" -I"/home/lpmeoli/Especializacion/trabajos_practicos/bimestre_01/PdC_Workspace/accelerometer_LED_Matrix/Drivers/API" -I"/home/lpmeoli/Especializacion/trabajos_practicos/bimestre_01/PdC_Workspace/accelerometer_LED_Matrix/Drivers/API/Inc" -I"/home/lpmeoli/Especializacion/trabajos_practicos/bimestre_01/PdC_Workspace/accelerometer_LED_Matrix/Drivers/API/Src" -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Drivers/API/Src/API_decode_coordinates.d" -MT"Drivers/API/Src/API_decode_coordinates.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Drivers/API/Src/API_decode_coordinates.o"
-arm-none-eabi-gcc -o "accelerometer_LED_Matrix.elf" @"objects.list"   -mcpu=cortex-m4 -T"/home/lpmeoli/Especializacion/trabajos_practicos/bimestre_01/PdC_Workspace/accelerometer_LED_Matrix/STM32F429ZITX_FLASH.ld" --specs=nosys.specs -Wl,-Map="accelerometer_LED_Matrix.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
-Finished building target: accelerometer_LED_Matrix.elf
- 
-arm-none-eabi-size  accelerometer_LED_Matrix.elf 
-arm-none-eabi-objdump -h -S accelerometer_LED_Matrix.elf  > "accelerometer_LED_Matrix.list"
-   text	   data	    bss	    dec	    hex	filename
-  17196	     96	   1856	  19148	   4acc	accelerometer_LED_Matrix.elf
+  17368	    204	   1852	  19424	   4be0	accelerometer_LED_Matrix.elf
 Finished building: default.size.stdout
  
 Finished building: accelerometer_LED_Matrix.list

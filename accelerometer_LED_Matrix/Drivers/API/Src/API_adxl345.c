@@ -12,13 +12,14 @@
 #include "stm32f4xx_hal.h"
 #include "stm32f4xx_nucleo_144.h"
 #include "API_uart.h"
+
 #include "API_adxl345.h"
 
 /* Private typedef -----------------------------------------------------------*/
 /* Private define ------------------------------------------------------------*/
 #define ADXL345_ADDRESS 	0x53
-
-//Register address
+#define CLOCK_SPEED			100000	// This parameter must be set to a value lower than 400kHz
+#define REGISTER_DEVID		0xE5
 
 
 /* Private macro -------------------------------------------------------------*/
@@ -32,37 +33,44 @@ static uint8_t read_register(uint8_t reg);
 
 
 /* Public functions ---------------------------------------------------------*/
-void adlx345_init() {
-	if(HAL_I2C_GetState(&hi2c1) == HAL_I2C_STATE_RESET) {
+#define DEFINE_ADXL345_REGISTER_FUNCTION(name, reg) \
+    void adxl345_set_##name(uint8_t value) { \
+        write_register(reg, value); \
+    }
+
+DEFINE_ADXL345_REGISTER_FUNCTION(BW_RATE, REG_BW_RATE)
+DEFINE_ADXL345_REGISTER_FUNCTION(POWER_CTL, REG_POWER_CTL)
+DEFINE_ADXL345_REGISTER_FUNCTION(DATA_FORMAT, REG_DATA_FORMAT)
+
+
+
+bool_t adlx345_I2C_init() {
+	bool_t return_value = false;
+	HAL_I2C_StateTypeDef i2c_state = HAL_I2C_GetState(&hi2c1);
+
+	if (i2c_state == HAL_I2C_STATE_RESET) {
 		/* I2C configuration*/
 		hi2c1.Instance 				= I2C1;
-		hi2c1.Init.ClockSpeed 		= 100000;
+		hi2c1.Init.ClockSpeed 		= CLOCK_SPEED;
 		hi2c1.Init.DutyCycle 		= I2C_DUTYCYCLE_2;
-		hi2c1.Init.OwnAddress1 		= 0;
 		hi2c1.Init.AddressingMode 	= I2C_ADDRESSINGMODE_7BIT;
 		hi2c1.Init.DualAddressMode 	= I2C_DUALADDRESS_DISABLE;
-		hi2c1.Init.OwnAddress2 		= 0;
 		hi2c1.Init.GeneralCallMode 	= I2C_GENERALCALL_DISABLE;
 		hi2c1.Init.NoStretchMode 	= I2C_NOSTRETCH_DISABLE;
 
-
 		HAL_I2C_MspInit(&hi2c1);
 
-		if(HAL_I2C_Init(&hi2c1) != HAL_OK) {
-			uart_send_string("Error en la INICIALIZACION \n\r");
+		// Init I2C and read static device ID to check communication
+		if ((HAL_I2C_Init(&hi2c1) == HAL_OK) && (read_register(REG_DEVID) == REGISTER_DEVID)) {
+			return_value = true;
 		}
-
-		/* Chequeo que la direccion statica sea correcta */
-		if (read_register(REG_DEVID) != 0xE5) {
-			uart_send_string("Error primer registro \n\r");
-		}
-
-		write_register(REG_BW_RATE, 0x08);
-		write_register(REG_DATA_FORMAT, 0x08);
-		write_register(REG_POWER_CTL, 0x08);
+	} else if (i2c_state != HAL_I2C_STATE_ERROR) {
+		// Not an STATE_ERROR or STATE_RESET,so initialization was already done
+		return_value = true;
 	}
-}
 
+	return return_value;
+}
 
 void HAL_I2C_MspInit(I2C_HandleTypeDef *hi2c1) {
 	GPIO_InitTypeDef GPIO_InitStruct;
@@ -82,13 +90,12 @@ void HAL_I2C_MspInit(I2C_HandleTypeDef *hi2c1) {
 	__HAL_RCC_I2C1_CLK_ENABLE();
 }
 
+HAL_I2C_StateTypeDef adxl345_get_I2C_state() {
+	return HAL_I2C_GetState(&hi2c1);
+}
 
 
-/**
- * @brief   Reads the coordinates from the ADXL345 accelerometer.
- * @param   None.
- * @retval  Coordinates structure containing X, Y, and Z coordinates.
- */
+
 coordinates_t adxl345_read_coordinates() {
 	uint8_t reg_data_coord = REG_DATAX0;
 	coordinates_t coord;
@@ -107,11 +114,15 @@ coordinates_t adxl345_read_coordinates() {
 
 
 
-void adxl345_modify_sensitivity(adxl345_sensitivity_t sensitivity) {
-	uint8_t reg_sensitivity = (0x00|sensitivity);
+void adxl345_set_sensitivity(adxl345_sensitivity_t sensitivity) {
+	uint8_t reg_sensitivity = sensitivity;
+
+	if (sensitivity > RESOLUTION_16G) {
+		return;
+	}
+
 	write_register(REG_DATA_FORMAT, reg_sensitivity);
 }
-
 
 
 

@@ -8,6 +8,9 @@
 #ifndef API_INC_API_ADXL345_H_
 #define API_INC_API_ADXL345_H_
 
+/* Exported types ------------------------------------------------------------*/
+typedef bool bool_t;
+
 typedef struct {
 	int16_t x_coord;
 	int16_t y_coord;
@@ -37,8 +40,33 @@ typedef enum {
 } adxl345_sensitivity_t;
 
 
-void adlx345_init();
+
+bool_t adlx345_I2C_init();
+
+/**
+ * @brief   Reads the coordinates from the ADXL345 accelerometer.
+ *
+ * @param   None.
+ * @retval  Coordinates structure containing X, Y, and Z coordinates.
+ */
 coordinates_t adxl345_read_coordinates();
-void adxl345_modify_sensitivity(adxl345_sensitivity_t sensitivity);
+
+
+HAL_I2C_StateTypeDef adxl345_get_I2C_state();
+
+/**
+ * @brief   Set the sensitivity of the ADXL345 accelerometer.
+ *
+ * @param   sensitivity: The new sensitivity value to be set. This value
+ * 			should be within the range of adxl345_sensitivity_t enum.
+ * @retval  None.
+ */
+void adxl345_set_sensitivity(adxl345_sensitivity_t sensitivity);
+
+
+void adxl345_set_BW_RATE(uint8_t value);
+void adxl345_set_POWER_CTL(uint8_t value);
+void adxl345_set_DATA_FORMAT(uint8_t value);
+
 
 #endif /* API_INC_API_ADXL345_H_ */

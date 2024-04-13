@@ -10,7 +10,7 @@ C_SRCS += \
 ../Drivers/API/Src/API_debounce.c \
 ../Drivers/API/Src/API_decode_coordinates.c \
 ../Drivers/API/Src/API_delay.c \
-../Drivers/API/Src/API_max7219_led_display.c \
+../Drivers/API/Src/API_max7219.c \
 ../Drivers/API/Src/API_uart.c 
 
 OBJS += \
@@ -19,7 +19,7 @@ OBJS += \
 ./Drivers/API/Src/API_debounce.o \
 ./Drivers/API/Src/API_decode_coordinates.o \
 ./Drivers/API/Src/API_delay.o \
-./Drivers/API/Src/API_max7219_led_display.o \
+./Drivers/API/Src/API_max7219.o \
 ./Drivers/API/Src/API_uart.o 
 
 C_DEPS += \
@@ -28,7 +28,7 @@ C_DEPS += \
 ./Drivers/API/Src/API_debounce.d \
 ./Drivers/API/Src/API_decode_coordinates.d \
 ./Drivers/API/Src/API_delay.d \
-./Drivers/API/Src/API_max7219_led_display.d \
+./Drivers/API/Src/API_max7219.d \
 ./Drivers/API/Src/API_uart.d 
 
 
@@ -39,7 +39,7 @@ Drivers/API/Src/%.o Drivers/API/Src/%.su Drivers/API/Src/%.cyclo: ../Drivers/API
 clean: clean-Drivers-2f-API-2f-Src
 
 clean-Drivers-2f-API-2f-Src:
-	-$(RM) ./Drivers/API/Src/API_adlx345_sensitivity.cyclo ./Drivers/API/Src/API_adlx345_sensitivity.d ./Drivers/API/Src/API_adlx345_sensitivity.o ./Drivers/API/Src/API_adlx345_sensitivity.su ./Drivers/API/Src/API_adxl345.cyclo ./Drivers/API/Src/API_adxl345.d ./Drivers/API/Src/API_adxl345.o ./Drivers/API/Src/API_adxl345.su ./Drivers/API/Src/API_debounce.cyclo ./Drivers/API/Src/API_debounce.d ./Drivers/API/Src/API_debounce.o ./Drivers/API/Src/API_debounce.su ./Drivers/API/Src/API_decode_coordinates.cyclo ./Drivers/API/Src/API_decode_coordinates.d ./Drivers/API/Src/API_decode_coordinates.o ./Drivers/API/Src/API_decode_coordinates.su ./Drivers/API/Src/API_delay.cyclo ./Drivers/API/Src/API_delay.d ./Drivers/API/Src/API_delay.o ./Drivers/API/Src/API_delay.su ./Drivers/API/Src/API_max7219_led_display.cyclo ./Drivers/API/Src/API_max7219_led_display.d ./Drivers/API/Src/API_max7219_led_display.o ./Drivers/API/Src/API_max7219_led_display.su ./Drivers/API/Src/API_uart.cyclo ./Drivers/API/Src/API_uart.d ./Drivers/API/Src/API_uart.o ./Drivers/API/Src/API_uart.su
+	-$(RM) ./Drivers/API/Src/API_adlx345_sensitivity.cyclo ./Drivers/API/Src/API_adlx345_sensitivity.d ./Drivers/API/Src/API_adlx345_sensitivity.o ./Drivers/API/Src/API_adlx345_sensitivity.su ./Drivers/API/Src/API_adxl345.cyclo ./Drivers/API/Src/API_adxl345.d ./Drivers/API/Src/API_adxl345.o ./Drivers/API/Src/API_adxl345.su ./Drivers/API/Src/API_debounce.cyclo ./Drivers/API/Src/API_debounce.d ./Drivers/API/Src/API_debounce.o ./Drivers/API/Src/API_debounce.su ./Drivers/API/Src/API_decode_coordinates.cyclo ./Drivers/API/Src/API_decode_coordinates.d ./Drivers/API/Src/API_decode_coordinates.o ./Drivers/API/Src/API_decode_coordinates.su ./Drivers/API/Src/API_delay.cyclo ./Drivers/API/Src/API_delay.d ./Drivers/API/Src/API_delay.o ./Drivers/API/Src/API_delay.su ./Drivers/API/Src/API_max7219.cyclo ./Drivers/API/Src/API_max7219.d ./Drivers/API/Src/API_max7219.o ./Drivers/API/Src/API_max7219.su ./Drivers/API/Src/API_uart.cyclo ./Drivers/API/Src/API_uart.d ./Drivers/API/Src/API_uart.o ./Drivers/API/Src/API_uart.su
 
 .PHONY: clean-Drivers-2f-API-2f-Src
 

@@ -1,6 +1,10 @@
-../Drivers/API/Src/API_adxl345.c:35:6:adlx345_init	4
-../Drivers/API/Src/API_adxl345.c:67:6:HAL_I2C_MspInit	1
-../Drivers/API/Src/API_adxl345.c:92:15:adxl345_read_coordinates	3
-../Drivers/API/Src/API_adxl345.c:110:6:adxl345_modify_sensitivity	1
-../Drivers/API/Src/API_adxl345.c:125:16:read_register	3
-../Drivers/API/Src/API_adxl345.c:145:13:write_register	2
+../Drivers/API/Src/API_adxl345.c:41:1:adxl345_set_BW_RATE	1
+../Drivers/API/Src/API_adxl345.c:42:1:adxl345_set_POWER_CTL	1
+../Drivers/API/Src/API_adxl345.c:43:1:adxl345_set_DATA_FORMAT	1
+../Drivers/API/Src/API_adxl345.c:47:8:adlx345_I2C_init	5
+../Drivers/API/Src/API_adxl345.c:75:6:HAL_I2C_MspInit	1
+../Drivers/API/Src/API_adxl345.c:93:22:adxl345_get_I2C_state	1
+../Drivers/API/Src/API_adxl345.c:99:15:adxl345_read_coordinates	3
+../Drivers/API/Src/API_adxl345.c:117:6:adxl345_set_sensitivity	2
+../Drivers/API/Src/API_adxl345.c:136:16:read_register	3
+../Drivers/API/Src/API_adxl345.c:156:13:write_register	2

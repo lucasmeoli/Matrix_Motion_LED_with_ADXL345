@@ -16,7 +16,7 @@
  * @param  time: The debounce time for stabilizing button inputs
  * @retval None
  */
-void sensitivity_FSM_init();
+bool_t sensitivity_FSM_init();
 
 /**
  * @brief  FSM logic. It updates the debounce FSM state depending on the current state value,
