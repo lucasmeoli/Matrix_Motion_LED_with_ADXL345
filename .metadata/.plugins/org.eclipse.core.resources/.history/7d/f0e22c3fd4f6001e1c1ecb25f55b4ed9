@@ -1,0 +1,13 @@
+/*
+ * API_adxl345_sensitivity.h
+ *
+ *  Created on: Apr 9, 2024
+ *      Author: lpmeoli
+ */
+
+#ifndef API_INC_API_ADXL345_SENSITIVITY_H_
+#define API_INC_API_ADXL345_SENSITIVITY_H_
+
+
+
+#endif /* API_INC_API_ADXL345_SENSITIVITY_H_ */

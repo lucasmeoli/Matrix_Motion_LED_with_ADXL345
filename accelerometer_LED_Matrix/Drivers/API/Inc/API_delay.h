@@ -53,7 +53,7 @@ void delay_write(delay_t * delay, tick_t duration);
  *
  * @param  delay: Pointer to the structure representing the delay.
  *  	   duration: The new duration time for the delay in milliseconds. Must be greater than 0.
- * @retval Boolean valuea indicating if it was possible to change timer time.
+ * @retval Boolean value indicating if it was possible to change timer time.
  */
 bool_t delay_write_inactive_timer(delay_t *delay, tick_t duration);
 

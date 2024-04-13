@@ -29,11 +29,11 @@ void debounce_FSM_init(uint32_t debounceTime);
 void debounce_FSM_update();
 
 /**
- * @brief Reads the state of the key and resets the flag for a falling edge in case of true value.
+ * @brief Reads the state of the button and resets the flag for a falling edge in case of true value.
  *
  * @param  None
  * @retval None
  */
-bool_t read_key();
+bool_t read_button();
 
 #endif /* API_INC_API_DEBOUNCE_H_ */
