@@ -35,6 +35,7 @@ typedef enum {
 /* Private define ------------------------------------------------------------*/
 #define MAX_DISPLAYS	4
 
+#define SPI_TIMEOUT		1000
 /* Private macro -------------------------------------------------------------*/
 /* Private variables ---------------------------------------------------------*/
 static SPI_HandleTypeDef hspi1;
@@ -204,13 +205,13 @@ static void max7219_send_data(uint8_t reg, uint8_t data, uint8_t display_num) {
 	   When LOAD/CS transitions high, data is latched in all devices.
 	*/
 	for (uint8_t i = ((active_displays-1)-display_num); i > 0; i--) {
-	    HAL_SPI_Transmit(&hspi1, (uint8_t *)&no_op, 1, 1000);
+	    HAL_SPI_Transmit(&hspi1, (uint8_t *)&no_op, 1, SPI_TIMEOUT);
 	}
 
-	HAL_SPI_Transmit(&hspi1, (uint8_t *)&buf, 1, 1000);
+	HAL_SPI_Transmit(&hspi1, (uint8_t *)&buf, 1, SPI_TIMEOUT);
 
 	for (uint8_t i = 0; i < display_num; i++) {
-		HAL_SPI_Transmit(&hspi1, (uint8_t *)&no_op, 1, 1000);
+		HAL_SPI_Transmit(&hspi1, (uint8_t *)&no_op, 1, SPI_TIMEOUT);
 	}
 
 	HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4, GPIO_PIN_SET);

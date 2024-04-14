@@ -37,6 +37,8 @@ typedef enum {
 #define REGISTER_DEVID		0xE5
 #define MASK_DATA_READY		0x80
 
+#define I2C_TIMEOUT			1000
+
 /* Private macro -------------------------------------------------------------*/
 /* Private variables ---------------------------------------------------------*/
 static I2C_HandleTypeDef hi2c1;
@@ -101,8 +103,8 @@ coordinates_t adxl345_read_coordinates() {
 	coordinates_t coord;
 	uint16_t coord_size = sizeof(coord)/ sizeof(uint8_t);
 
-	HAL_I2C_Master_Transmit(&hi2c1, ADXL345_ADDRESS<<1, &reg_data_coord, sizeof(reg_data_coord), 1000);
-	HAL_I2C_Master_Receive(&hi2c1, ADXL345_ADDRESS<<1, (uint8_t *) &coord, coord_size, 10000);
+	HAL_I2C_Master_Transmit(&hi2c1, ADXL345_ADDRESS<<1, &reg_data_coord, sizeof(reg_data_coord), I2C_TIMEOUT);
+	HAL_I2C_Master_Receive(&hi2c1, ADXL345_ADDRESS<<1, (uint8_t *) &coord, coord_size, I2C_TIMEOUT);
 
 	return coord;
 }
@@ -114,10 +116,7 @@ HAL_I2C_StateTypeDef adxl345_get_I2C_state() {
 
 bool_t adxl345_is_data_ready() {
 	uint8_t reg = REG_INT_SOURCE;
-	uint8_t value;
-
-	HAL_I2C_Master_Transmit(&hi2c1, ADXL345_ADDRESS<<1, &reg, sizeof(reg), 10000);
-	HAL_I2C_Master_Receive(&hi2c1, ADXL345_ADDRESS<<1, &value, sizeof(value), 10000);
+	uint8_t value = read_register(reg);
 
 	if (value&MASK_DATA_READY) {
 		return true;
@@ -153,17 +152,19 @@ DEFINE_ADXL345_REGISTER_FUNCTION(data_format, REG_DATA_FORMAT)
 
 /**
  * @brief   Reads the value from the specified register of the ADXL345 accelerometer.
+ *
  * @param   reg: The register address to read from.
  * @retval  The value read from the specified register.
  */
 static uint8_t read_register(uint8_t reg) {
 	uint8_t value;
 
-	HAL_I2C_Master_Transmit(&hi2c1, ADXL345_ADDRESS<<1, &reg, sizeof(reg), 10000);
-	HAL_I2C_Master_Receive(&hi2c1, ADXL345_ADDRESS<<1, &value, sizeof(value), 10000);
+	HAL_I2C_Master_Transmit(&hi2c1, ADXL345_ADDRESS<<1, &reg, sizeof(reg), I2C_TIMEOUT);
+	HAL_I2C_Master_Receive(&hi2c1, ADXL345_ADDRESS<<1, &value, sizeof(value), I2C_TIMEOUT);
 
 	return value;
 }
+
 
 
 /**
@@ -176,7 +177,7 @@ static void write_register(uint8_t reg, uint8_t value) {
 	 uint8_t buf[] = {reg, value};
 	 uint16_t size = sizeof(buf) / sizeof(uint8_t);
 
-	 HAL_I2C_Master_Transmit(&hi2c1, ADXL345_ADDRESS<<1, buf, size, 10000);
+	 HAL_I2C_Master_Transmit(&hi2c1, ADXL345_ADDRESS<<1, buf, size, I2C_TIMEOUT);
 }
 
 

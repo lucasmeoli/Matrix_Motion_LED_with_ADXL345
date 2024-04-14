@@ -1,0 +1,13 @@
+/*
+ * API_adxl345_port.h
+ *
+ *  Created on: Apr 14, 2024
+ *      Author: lpmeoli
+ */
+
+#ifndef API_INC_ADXL345_API_ADXL345_PORT_H_
+#define API_INC_ADXL345_API_ADXL345_PORT_H_
+
+
+
+#endif /* API_INC_ADXL345_API_ADXL345_PORT_H_ */
