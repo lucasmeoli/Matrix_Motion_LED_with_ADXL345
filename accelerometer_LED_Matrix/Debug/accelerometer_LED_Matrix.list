@@ -662,7 +662,7 @@ static void configure_adxl345() {
  8000700:	2008      	movs	r0, #8
  8000702:	f000 fa73 	bl	8000bec <adxl345_set_bandwidth_rate>
 	adxl345_set_data_format(ADXL345_DATA_FORMAT_VALUE);
- 8000706:	2008      	movs	r0, #8
+ 8000706:	2000      	movs	r0, #0
  8000708:	f000 fa8a 	bl	8000c20 <adxl345_set_data_format>
 	adxl345_set_power_control(ADXL345_POWER_CTL_VALUE);
  800070c:	2008      	movs	r0, #8
@@ -2119,7 +2119,7 @@ static void max7219_send_data(uint8_t reg, uint8_t data, uint8_t display_num) {
  8000fce:	3b01      	subs	r3, #1
  8000fd0:	73fb      	strb	r3, [r7, #15]
  8000fd2:	e00a      	b.n	8000fea <max7219_send_data+0x62>
-	    HAL_SPI_Transmit(&hspi1, (uint8_t *)&no_op, 1, SPI_TIMEOUT);
+	    HAL_SPI_Transmit(&hspi1, (uint8_t *)&no_op, sizeof(uint8_t), SPI_TIMEOUT);
  8000fd4:	f107 010a 	add.w	r1, r7, #10
  8000fd8:	f44f 737a 	mov.w	r3, #1000	; 0x3e8
  8000fdc:	2201      	movs	r2, #1
@@ -2134,7 +2134,7 @@ static void max7219_send_data(uint8_t reg, uint8_t data, uint8_t display_num) {
  8000fee:	d1f1      	bne.n	8000fd4 <max7219_send_data+0x4c>
 	}
 
-	HAL_SPI_Transmit(&hspi1, (uint8_t *)&buf, 1, SPI_TIMEOUT);
+	HAL_SPI_Transmit(&hspi1, (uint8_t *)&buf, sizeof(uint8_t), SPI_TIMEOUT);
  8000ff0:	f107 010c 	add.w	r1, r7, #12
  8000ff4:	f44f 737a 	mov.w	r3, #1000	; 0x3e8
  8000ff8:	2201      	movs	r2, #1
@@ -2145,7 +2145,7 @@ static void max7219_send_data(uint8_t reg, uint8_t data, uint8_t display_num) {
  8001000:	2300      	movs	r3, #0
  8001002:	73bb      	strb	r3, [r7, #14]
  8001004:	e00a      	b.n	800101c <max7219_send_data+0x94>
-		HAL_SPI_Transmit(&hspi1, (uint8_t *)&no_op, 1, SPI_TIMEOUT);
+		HAL_SPI_Transmit(&hspi1, (uint8_t *)&no_op, sizeof(uint8_t), SPI_TIMEOUT);
  8001006:	f107 010a 	add.w	r1, r7, #10
  800100a:	f44f 737a 	mov.w	r3, #1000	; 0x3e8
  800100e:	2201      	movs	r2, #1
