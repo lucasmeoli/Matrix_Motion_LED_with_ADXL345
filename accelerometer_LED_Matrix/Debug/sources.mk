@@ -23,6 +23,9 @@ C_DEPS :=
 # Every subdirectory with source files must be described here
 SUBDIRS := \
 Drivers/API/Src \
+Drivers/API/Src/Adxl345 \
+Drivers/API/Src/Max7219 \
+Drivers/API/Src/Utils \
 Drivers/BSP/STM32F4xx_Nucleo_144 \
 Drivers/CMSIS \
 Drivers/Core/Src \

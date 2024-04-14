@@ -2261,3 +2261,18 @@ java.lang.IllegalStateException: Call stack for thread main
 	at app//org.eclipse.equinox.launcher.Main.basicRun(Main.java:588)
 	at app//org.eclipse.equinox.launcher.Main.run(Main.java:1459)
 	at app//org.eclipse.equinox.launcher.Main.main(Main.java:1432)
+!SESSION 2024-04-14 09:00:54.111 -----------------------------------------------
+eclipse.buildId=Version 1.14.0
+java.version=17.0.8.1
+java.vendor=Eclipse Adoptium
+BootLoader constants: OS=linux, ARCH=x86_64, WS=gtk, NL=en_US
+Command-line arguments:  -os linux -ws gtk -arch x86_64
+
+!ENTRY com.st.stm32cube.ide.mcu.informationcenter 4 4 2024-04-14 09:01:20.518
+!MESSAGE CubeMX plugin appears to be active, Log4j initialization might be too late.
+
+!ENTRY com.st.stm32cube.ide.mcu.informationcenter 1 1 2024-04-14 09:01:20.519
+!MESSAGE Log4j2 initialized with config file /home/lpmeoli/Especializacion/trabajos_practicos/bimestre_01/PdC_Workspace/.metadata/.log4j2.xml
+
+!ENTRY com.st.stm32cube.ide.mcu.ide 1 1 2024-04-14 09:01:24.073
+!MESSAGE Started RMI Server, listening on port 41337

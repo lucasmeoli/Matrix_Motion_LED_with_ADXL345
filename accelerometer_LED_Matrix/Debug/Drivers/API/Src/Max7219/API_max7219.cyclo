@@ -1,0 +1,12 @@
+../Drivers/API/Src/Max7219/API_max7219.c:47:8:max7219_SPI_init	4
+../Drivers/API/Src/Max7219/API_max7219.c:80:6:HAL_SPI_MspInit	1
+../Drivers/API/Src/Max7219/API_max7219.c:117:6:max7219_clean_display	2
+../Drivers/API/Src/Max7219/API_max7219.c:133:6:max7219_clean_all_displays	2
+../Drivers/API/Src/Max7219/API_max7219.c:147:6:max7219_turn_on_LEDs	3
+../Drivers/API/Src/Max7219/API_max7219.c:160:1:max7219_set_decode_mode	1
+../Drivers/API/Src/Max7219/API_max7219.c:161:1:max7219_set_intensity	1
+../Drivers/API/Src/Max7219/API_max7219.c:162:1:max7219_set_scan_limit	1
+../Drivers/API/Src/Max7219/API_max7219.c:163:1:max7219_set_shutdown	1
+../Drivers/API/Src/Max7219/API_max7219.c:165:6:max7219_set_displays	2
+../Drivers/API/Src/Max7219/API_max7219.c:175:22:max7219_get_SPI_state	1
+../Drivers/API/Src/Max7219/API_max7219.c:189:13:max7219_send_data	4

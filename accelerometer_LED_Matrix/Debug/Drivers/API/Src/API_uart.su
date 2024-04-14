@@ -1,5 +1,0 @@
-../Drivers/API/Src/API_uart.c:36:8:uart_init	16	static
-../Drivers/API/Src/API_uart.c:63:23:uart_get_state	8	static
-../Drivers/API/Src/API_uart.c:68:6:uart_send_string	24	static
-../Drivers/API/Src/API_uart.c:80:6:uart_send_string_size	16	static
-../Drivers/API/Src/API_uart.c:90:6:uart_receive_string_size	16	static

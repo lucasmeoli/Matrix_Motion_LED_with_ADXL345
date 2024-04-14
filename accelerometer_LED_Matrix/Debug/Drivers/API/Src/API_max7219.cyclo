@@ -1,7 +1,0 @@
-../Drivers/API/Src/API_max7219.c:28:8:max7219_SPI_init	4
-../Drivers/API/Src/API_max7219.c:61:6:max7219_set_displays	2
-../Drivers/API/Src/API_max7219.c:69:22:max7219_get_SPI_state	1
-../Drivers/API/Src/API_max7219.c:74:6:max7219_send_data	4
-../Drivers/API/Src/API_max7219.c:98:6:max7219_clean_display	2
-../Drivers/API/Src/API_max7219.c:114:6:max7219_clean_all_displays	2
-../Drivers/API/Src/API_max7219.c:127:6:HAL_SPI_MspInit	1

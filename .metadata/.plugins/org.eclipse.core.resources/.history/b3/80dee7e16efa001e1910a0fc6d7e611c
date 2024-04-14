@@ -1,0 +1,21 @@
+/*
+ * API_decode_coordinates.h
+ *
+ *  Created on: Apr 8, 2024
+ *      Author: lpmeoli
+ */
+
+#ifndef API_INC_API_DECODE_COORDINATES_H_
+#define API_INC_API_DECODE_COORDINATES_H_
+
+
+/*
+ * @brief  Initializes the coordinate Finite State Machine (FSM) and checks the initialization status of various communication modules.
+ *
+ * @param  None
+ * @retval bool_t - TRUE if all communication modules (I2C, SPI, UART) are initialized successfully, false otherwise.
+*/
+bool_t coordinates_FSM_init();
+void coordinates_FSM_update();
+
+#endif /* API_INC_API_DECODE_COORDINATES_H_ */

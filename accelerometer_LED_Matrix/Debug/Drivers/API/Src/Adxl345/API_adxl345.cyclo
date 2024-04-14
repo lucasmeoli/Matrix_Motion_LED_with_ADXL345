@@ -1,0 +1,11 @@
+../Drivers/API/Src/Adxl345/API_adxl345.c:51:8:adlx345_I2C_init	5
+../Drivers/API/Src/Adxl345/API_adxl345.c:80:6:HAL_I2C_MspInit	1
+../Drivers/API/Src/Adxl345/API_adxl345.c:99:15:adxl345_read_coordinates	1
+../Drivers/API/Src/Adxl345/API_adxl345.c:111:22:adxl345_get_I2C_state	1
+../Drivers/API/Src/Adxl345/API_adxl345.c:115:8:adxl345_is_data_ready	2
+../Drivers/API/Src/Adxl345/API_adxl345.c:129:6:adxl345_set_sensitivity	2
+../Drivers/API/Src/Adxl345/API_adxl345.c:145:1:adxl345_set_bandwidth_rate	1
+../Drivers/API/Src/Adxl345/API_adxl345.c:146:1:adxl345_set_power_control	1
+../Drivers/API/Src/Adxl345/API_adxl345.c:147:1:adxl345_set_data_format	1
+../Drivers/API/Src/Adxl345/API_adxl345.c:159:16:read_register	1
+../Drivers/API/Src/Adxl345/API_adxl345.c:175:13:write_register	1

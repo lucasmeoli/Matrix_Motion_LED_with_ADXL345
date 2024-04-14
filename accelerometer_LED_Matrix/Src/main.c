@@ -105,6 +105,7 @@ int main(void) {
   *         It includes initialization of the debounce FSM with a specified debounce time,
   *         as well as the sensitivity FSM and the coordinates FSM.
   *         If initialization of any FSM fails, Error_Handler() is called.
+  *
   * @param  None
   * @retval None
   */
@@ -126,6 +127,7 @@ static void FSM_init(void) {
 /**
   * @brief  Initializes initializes UART,I2C for ADXL345, and SPI for MAX7219.
   *         If initialization of any peripheral fails, Error_Handler() is called.
+  *
   * @param  None
   * @retval None
   */

@@ -16,6 +16,9 @@ RM := rm -rf
 -include Drivers/Core/Src/subdir.mk
 -include Drivers/CMSIS/subdir.mk
 -include Drivers/BSP/STM32F4xx_Nucleo_144/subdir.mk
+-include Drivers/API/Src/Utils/subdir.mk
+-include Drivers/API/Src/Max7219/subdir.mk
+-include Drivers/API/Src/Adxl345/subdir.mk
 -include Drivers/API/Src/subdir.mk
 -include objects.mk
 

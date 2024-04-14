@@ -1,30 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
-		<item key="selection" value="positive"/>
+		<item key="selection" value="TIMER_BLINK_500MS"/>
 		<item key="wrap" value="true"/>
 		<item key="casesensitive" value="false"/>
 		<item key="wholeword" value="false"/>
 		<item key="incremental" value="false"/>
 		<item key="isRegEx" value="false"/>
 		<list key="findhistory">
-			<item value="REG_DATA_FORMAT"/>
-			<item value="positive"/>
-			<item value="coordenada_y"/>
+			<item value="read_register"/>
+			<item value="TIMER_BLINK_500MS"/>
+			<item value="TIMER_BLINK_100MS"/>
+			<item value="blink_timers"/>
+			<item value="MAX_DISPLAYS"/>
+			<item value="1active_displays"/>
+			<item value="active_displays"/>
+			<item value="3"/>
+			<item value="MAX_COORDINATE_VALUE"/>
 			<item value="pmesg_error"/>
-			<item value="rising_edge"/>
-			<item value="uart"/>
-			<item value="uarts"/>
-			<item value="fallin"/>
-			<item value="HAL_SPI_Transmit"/>
-			<item value="HAL_SPI_MspInit"/>
-			<item value="SPI_Init"/>
-			<item value="SPI_Direction"/>
-			<item value="__HAL_RCC_SPI1"/>
-			<item value="__HAL_RCC_SPI"/>
-			<item value="HAL_SPI_MODULE_ENABLED"/>
+			<item value="current_display"/>
+			<item value="TEMP"/>
+			<item value="index"/>
+			<item value="indice"/>
+			<item value="REG_DATA_FORMAT"/>
 		</list>
 		<list key="replacehistory">
+			<item value="TOTAL_DISPLAYS"/>
 		</list>
 	</section>
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">
