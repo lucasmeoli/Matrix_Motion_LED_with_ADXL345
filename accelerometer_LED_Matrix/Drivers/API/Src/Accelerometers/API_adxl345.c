@@ -11,7 +11,7 @@
 #include <stdbool.h>
 #include "stm32f4xx_hal.h"
 #include "stm32f4xx_nucleo_144.h"
-
+#include "API_adxl345_port.h"
 #include "API_adxl345.h"
 
 /* Private typedef -----------------------------------------------------------*/
@@ -32,11 +32,9 @@ typedef enum {
 } adxl345_register_t;
 
 /* Private define ------------------------------------------------------------*/
-#define ADXL345_ADDRESS 	0x53
 #define CLOCK_SPEED			100000	// This parameter must be set to a value lower than 400kHz
 #define REGISTER_DEVID		0xE5
 #define MASK_DATA_READY		0x80
-
 #define I2C_TIMEOUT			1000
 
 /* Private macro -------------------------------------------------------------*/
@@ -44,10 +42,6 @@ typedef enum {
 static I2C_HandleTypeDef hi2c1;
 
 /* Private function prototypes -----------------------------------------------*/
-static void write_register(uint8_t reg, uint8_t value);
-static uint8_t read_register(uint8_t reg);
-
-
 /* Public functions ---------------------------------------------------------*/
 
 bool_t adlx345_I2C_init() {
@@ -67,7 +61,7 @@ bool_t adlx345_I2C_init() {
 		HAL_I2C_MspInit(&hi2c1);
 
 		// Init I2C and read static device ID to check communication
-		if ((HAL_I2C_Init(&hi2c1) == HAL_OK) && (read_register(REG_DEVID) == REGISTER_DEVID)) {
+		if ((HAL_I2C_Init(&hi2c1) == HAL_OK) && (read_register(&hi2c1, REG_DEVID) == REGISTER_DEVID)) {
 			return_value = true;
 		}
 	} else if (i2c_state != HAL_I2C_STATE_ERROR) {
@@ -116,7 +110,7 @@ HAL_I2C_StateTypeDef adxl345_get_I2C_state() {
 
 bool_t adxl345_is_data_ready() {
 	uint8_t reg = REG_INT_SOURCE;
-	uint8_t value = read_register(reg);
+	uint8_t value = read_register(&hi2c1,reg);
 
 	if (value&MASK_DATA_READY) {
 		return true;
@@ -132,52 +126,17 @@ void adxl345_set_sensitivity(adxl345_sensitivity_t sensitivity) {
 		return;
 	}
 
-	write_register(REG_DATA_FORMAT, reg_sensitivity);
+	write_register(&hi2c1, REG_DATA_FORMAT, reg_sensitivity);
 }
 
 
 #define DEFINE_ADXL345_REGISTER_FUNCTION(name, reg) \
     void adxl345_set_##name(uint8_t value) { \
-        write_register(reg, value); \
+        write_register(&hi2c1, reg, value); \
     }
 
 DEFINE_ADXL345_REGISTER_FUNCTION(bandwidth_rate, REG_BW_RATE)
 DEFINE_ADXL345_REGISTER_FUNCTION(power_control, REG_POWER_CTL)
 DEFINE_ADXL345_REGISTER_FUNCTION(data_format, REG_DATA_FORMAT)
-
-
-
-
-/* Private functions ---------------------------------------------------------*/
-
-/**
- * @brief   Reads the value from the specified register of the ADXL345 accelerometer.
- *
- * @param   reg: The register address to read from.
- * @retval  The value read from the specified register.
- */
-static uint8_t read_register(uint8_t reg) {
-	uint8_t value;
-
-	HAL_I2C_Master_Transmit(&hi2c1, ADXL345_ADDRESS<<1, &reg, sizeof(reg), I2C_TIMEOUT);
-	HAL_I2C_Master_Receive(&hi2c1, ADXL345_ADDRESS<<1, &value, sizeof(value), I2C_TIMEOUT);
-
-	return value;
-}
-
-
-
-/**
- * @brief   Writes a value to the specified register of the ADXL345 accelerometer.
- * @param   reg: The register address to write to.
- * @param   value: The value to write to the register.
- * @retval  None.
- */
-static void write_register(uint8_t reg, uint8_t value) {
-	 uint8_t buf[] = {reg, value};
-	 uint16_t size = sizeof(buf) / sizeof(uint8_t);
-
-	 HAL_I2C_Master_Transmit(&hi2c1, ADXL345_ADDRESS<<1, buf, size, I2C_TIMEOUT);
-}
 
 

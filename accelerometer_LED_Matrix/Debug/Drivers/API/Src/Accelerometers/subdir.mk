@@ -6,15 +6,18 @@
 # Add inputs and outputs from these tool invocations to the build variables 
 C_SRCS += \
 ../Drivers/API/Src/Accelerometers/API_adlx345_sensitivity.c \
-../Drivers/API/Src/Accelerometers/API_adxl345.c 
+../Drivers/API/Src/Accelerometers/API_adxl345.c \
+../Drivers/API/Src/Accelerometers/API_adxl345_port.c 
 
 OBJS += \
 ./Drivers/API/Src/Accelerometers/API_adlx345_sensitivity.o \
-./Drivers/API/Src/Accelerometers/API_adxl345.o 
+./Drivers/API/Src/Accelerometers/API_adxl345.o \
+./Drivers/API/Src/Accelerometers/API_adxl345_port.o 
 
 C_DEPS += \
 ./Drivers/API/Src/Accelerometers/API_adlx345_sensitivity.d \
-./Drivers/API/Src/Accelerometers/API_adxl345.d 
+./Drivers/API/Src/Accelerometers/API_adxl345.d \
+./Drivers/API/Src/Accelerometers/API_adxl345_port.d 
 
 
 # Each subdirectory must supply rules for building sources it contributes
@@ -24,7 +27,7 @@ Drivers/API/Src/Accelerometers/%.o Drivers/API/Src/Accelerometers/%.su Drivers/A
 clean: clean-Drivers-2f-API-2f-Src-2f-Accelerometers
 
 clean-Drivers-2f-API-2f-Src-2f-Accelerometers:
-	-$(RM) ./Drivers/API/Src/Accelerometers/API_adlx345_sensitivity.cyclo ./Drivers/API/Src/Accelerometers/API_adlx345_sensitivity.d ./Drivers/API/Src/Accelerometers/API_adlx345_sensitivity.o ./Drivers/API/Src/Accelerometers/API_adlx345_sensitivity.su ./Drivers/API/Src/Accelerometers/API_adxl345.cyclo ./Drivers/API/Src/Accelerometers/API_adxl345.d ./Drivers/API/Src/Accelerometers/API_adxl345.o ./Drivers/API/Src/Accelerometers/API_adxl345.su
+	-$(RM) ./Drivers/API/Src/Accelerometers/API_adlx345_sensitivity.cyclo ./Drivers/API/Src/Accelerometers/API_adlx345_sensitivity.d ./Drivers/API/Src/Accelerometers/API_adlx345_sensitivity.o ./Drivers/API/Src/Accelerometers/API_adlx345_sensitivity.su ./Drivers/API/Src/Accelerometers/API_adxl345.cyclo ./Drivers/API/Src/Accelerometers/API_adxl345.d ./Drivers/API/Src/Accelerometers/API_adxl345.o ./Drivers/API/Src/Accelerometers/API_adxl345.su ./Drivers/API/Src/Accelerometers/API_adxl345_port.cyclo ./Drivers/API/Src/Accelerometers/API_adxl345_port.d ./Drivers/API/Src/Accelerometers/API_adxl345_port.o ./Drivers/API/Src/Accelerometers/API_adxl345_port.su
 
 .PHONY: clean-Drivers-2f-API-2f-Src-2f-Accelerometers
 

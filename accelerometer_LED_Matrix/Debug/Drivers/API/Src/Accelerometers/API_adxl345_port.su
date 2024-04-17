@@ -1,0 +1,2 @@
+../Drivers/API/Src/Accelerometers/API_adxl345_port.c:25:9:read_register	32	static
+../Drivers/API/Src/Accelerometers/API_adxl345_port.c:35:6:write_register	32	static

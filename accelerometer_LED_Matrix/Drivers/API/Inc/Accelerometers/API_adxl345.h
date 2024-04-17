@@ -24,6 +24,9 @@ typedef enum {
 	RESOLUTION_16G		= 0x03,
 } adxl345_sensitivity_t;
 
+/* Exported constants --------------------------------------------------------*/
+#define ADXL345_ADDRESS 	0x53
+
 
 /* Exported functions ------------------------------------------------------- */
 

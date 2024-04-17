@@ -1,0 +1,29 @@
+/*
+ * API_max7219_port.c
+ *
+ *  Created on: Apr 17, 2024
+ *      Author: lpmeoli
+ */
+/* Includes ------------------------------------------------------------------*/
+#include <stdio.h>
+#include <stdint.h>
+#include "stm32f4xx_hal.h"
+#include "stm32f4xx_nucleo_144.h"
+#include "API_max7219.h"
+#include "API_max7219_port.h"
+
+/* Private typedef -----------------------------------------------------------*/
+/* Private define ------------------------------------------------------------*/
+#define I2C_TIMEOUT			1000
+
+/* Private macro -------------------------------------------------------------*/
+/* Private variables ---------------------------------------------------------*/
+/* Private function prototypes -----------------------------------------------*/
+/* Public functions ----------------------------------------------------------*/
+void write_register(I2C_HandleTypeDef *hspi1, uint8_t reg, uint8_t value) {
+	HAL_SPI_Transmit(&hspi1, (uint8_t *)&no_op, sizeof(uint8_t), SPI_TIMEOUT);
+}
+
+
+
+

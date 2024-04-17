@@ -1,0 +1,27 @@
+/*
+ * API_adxl345_port.c
+ *
+ *  Created on: Apr 17, 2024
+ *      Author: lpmeoli
+ */
+
+
+
+uint8_t read_register(uint8_t reg) {
+	uint8_t value;
+
+	HAL_I2C_Master_Transmit(&hi2c1, ADXL345_ADDRESS<<1, &reg, sizeof(reg), I2C_TIMEOUT);
+	HAL_I2C_Master_Receive(&hi2c1, ADXL345_ADDRESS<<1, &value, sizeof(value), I2C_TIMEOUT);
+
+	return value;
+}
+
+
+
+
+void write_register(uint8_t reg, uint8_t value) {
+	 uint8_t buf[] = {reg, value};
+	 uint16_t size = sizeof(buf) / sizeof(uint8_t);
+
+	 HAL_I2C_Master_Transmit(&hi2c1, ADXL345_ADDRESS<<1, buf, size, I2C_TIMEOUT);
+}

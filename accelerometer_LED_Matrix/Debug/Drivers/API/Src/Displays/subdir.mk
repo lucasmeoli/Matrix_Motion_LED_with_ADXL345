@@ -5,13 +5,16 @@
 
 # Add inputs and outputs from these tool invocations to the build variables 
 C_SRCS += \
-../Drivers/API/Src/Displays/API_max7219.c 
+../Drivers/API/Src/Displays/API_max7219.c \
+../Drivers/API/Src/Displays/API_max7219_port.c 
 
 OBJS += \
-./Drivers/API/Src/Displays/API_max7219.o 
+./Drivers/API/Src/Displays/API_max7219.o \
+./Drivers/API/Src/Displays/API_max7219_port.o 
 
 C_DEPS += \
-./Drivers/API/Src/Displays/API_max7219.d 
+./Drivers/API/Src/Displays/API_max7219.d \
+./Drivers/API/Src/Displays/API_max7219_port.d 
 
 
 # Each subdirectory must supply rules for building sources it contributes
@@ -21,7 +24,7 @@ Drivers/API/Src/Displays/%.o Drivers/API/Src/Displays/%.su Drivers/API/Src/Displ
 clean: clean-Drivers-2f-API-2f-Src-2f-Displays
 
 clean-Drivers-2f-API-2f-Src-2f-Displays:
-	-$(RM) ./Drivers/API/Src/Displays/API_max7219.cyclo ./Drivers/API/Src/Displays/API_max7219.d ./Drivers/API/Src/Displays/API_max7219.o ./Drivers/API/Src/Displays/API_max7219.su
+	-$(RM) ./Drivers/API/Src/Displays/API_max7219.cyclo ./Drivers/API/Src/Displays/API_max7219.d ./Drivers/API/Src/Displays/API_max7219.o ./Drivers/API/Src/Displays/API_max7219.su ./Drivers/API/Src/Displays/API_max7219_port.cyclo ./Drivers/API/Src/Displays/API_max7219_port.d ./Drivers/API/Src/Displays/API_max7219_port.o ./Drivers/API/Src/Displays/API_max7219_port.su
 
 .PHONY: clean-Drivers-2f-API-2f-Src-2f-Displays
 

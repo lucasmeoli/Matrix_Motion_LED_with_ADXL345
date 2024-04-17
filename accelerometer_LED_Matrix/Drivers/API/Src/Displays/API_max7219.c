@@ -8,10 +8,10 @@
 
 /* Includes ------------------------------------------------------------------*/
 #include <stdio.h>
-#include <stdint.h>
 #include <stdbool.h>
+#include <stdint.h>
 #include "stm32f4xx_nucleo_144.h" 	/* <- BSP include */
-
+#include "API_max7219_port.h"
 #include "API_max7219.h"
 
 /* Private typedef -----------------------------------------------------------*/
@@ -35,7 +35,6 @@ typedef enum {
 /* Private define ------------------------------------------------------------*/
 #define MAX_DISPLAYS	4
 
-#define SPI_TIMEOUT		1000
 /* Private macro -------------------------------------------------------------*/
 /* Private variables ---------------------------------------------------------*/
 static SPI_HandleTypeDef hspi1;
@@ -205,13 +204,13 @@ static void max7219_send_data(uint8_t reg, uint8_t data, uint8_t display_num) {
 	   When LOAD/CS transitions high, data is latched in all devices.
 	*/
 	for (uint8_t i = ((active_displays-1)-display_num); i > 0; i--) {
-	    HAL_SPI_Transmit(&hspi1, (uint8_t *)&no_op, sizeof(uint8_t), SPI_TIMEOUT);
+		send_data(&hspi1, no_op, sizeof(uint8_t));
 	}
 
-	HAL_SPI_Transmit(&hspi1, (uint8_t *)&buf, sizeof(uint8_t), SPI_TIMEOUT);
+	send_data(&hspi1, buf, sizeof(uint8_t));
 
 	for (uint8_t i = 0; i < display_num; i++) {
-		HAL_SPI_Transmit(&hspi1, (uint8_t *)&no_op, sizeof(uint8_t), SPI_TIMEOUT);
+		send_data(&hspi1, no_op, sizeof(uint8_t));
 	}
 
 	HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4, GPIO_PIN_SET);

@@ -1,0 +1,16 @@
+/*
+ * API_adxl345_port.h
+ *
+ *  Created on: Apr 17, 2024
+ *      Author: lpmeoli
+ */
+
+#ifndef API_INC_ACCELEROMETERS_API_ADXL345_PORT_H_
+#define API_INC_ACCELEROMETERS_API_ADXL345_PORT_H_
+
+
+void write_register(uint8_t reg, uint8_t value);
+
+uint8_t read_register(uint8_t reg);
+
+#endif /* API_INC_ACCELEROMETERS_API_ADXL345_PORT_H_ */
