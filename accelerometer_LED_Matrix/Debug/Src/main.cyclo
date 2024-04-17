@@ -1,5 +1,5 @@
-../Src/main.c:51:5:main	4
-../Src/main.c:112:13:FSM_init	3
-../Src/main.c:134:13:communication_peripherals_init	4
-../Src/main.c:170:13:SystemClock_Config	4
-../Src/main.c:223:13:Error_Handler	1
+../Src/main.c:50:5:main	1
+../Src/main.c:95:13:FSM_init	3
+../Src/main.c:117:13:communication_peripherals_init	4
+../Src/main.c:153:13:SystemClock_Config	4
+../Src/main.c:206:13:Error_Handler	1

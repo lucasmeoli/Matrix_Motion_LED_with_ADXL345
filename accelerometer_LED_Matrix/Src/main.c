@@ -23,15 +23,14 @@
 #include "API_delay.h"
 #include "API_debounce.h"
 #include "API_uart.h"
-#include "API_adxl345_sensitivity.h"
 #include "API_decode_coordinates.h"
 #include "API_adxl345.h"
 #include "API_max7219.h"
+#include "API_adxl345_sensitivity.h"
 
 /* Private typedef -----------------------------------------------------------*/
 /* Private define ------------------------------------------------------------*/
 #define DEBOUNCE_TIME		40
-#define BUTTON_TAPS_TIME	1000 // Time after pressing the button for a possible second press.
 
 /* Private macro -------------------------------------------------------------*/
 /* Private variables ---------------------------------------------------------*/
@@ -49,8 +48,6 @@ static void FSM_init(void);
  * @retval None
  */
 int main(void) {
-	delay_t button_timer;
-	uint8_t button_taps = 0;
 
 	/* STM32F4xx HAL library initialization:
        - Configure the Flash prefetch
@@ -77,25 +74,11 @@ int main(void) {
 	/* Initialize FSM */
 	FSM_init();
 
-	/* Initialize delay timer for button taps*/
-	delay_init(&button_timer, BUTTON_TAPS_TIME);
-
 	/* Infinite loop */
 	while (1) {
-
 		debounce_FSM_update();
 		coordinates_FSM_update();
-
-		if (read_button()) {
-			button_taps++;
-		}
-
-		if(button_taps>0) {
-			if (delay_read(&button_timer)) {
-				sensitivity_FSM_update(button_taps);
-				button_taps = 0;
-			}
-		}
+		sensitivity_FSM_update();
 	}
 }
 
