@@ -44,53 +44,22 @@ static I2C_HandleTypeDef hi2c1;
 /* Private function prototypes -----------------------------------------------*/
 /* Public functions ---------------------------------------------------------*/
 
-bool_t adlx345_I2C_init() {
+bool_t adxl345_I2C_init(I2C_HandleTypeDef aux_hi2c) {
 	bool_t return_value = false;
-	HAL_I2C_StateTypeDef i2c_state = HAL_I2C_GetState(&hi2c1);
+	HAL_I2C_StateTypeDef i2c_state;
 
-	if (i2c_state == HAL_I2C_STATE_RESET) {
-		/* I2C configuration*/
-		hi2c1.Instance 				= I2C1;
-		hi2c1.Init.ClockSpeed 		= CLOCK_SPEED;
-		hi2c1.Init.DutyCycle 		= I2C_DUTYCYCLE_2;
-		hi2c1.Init.AddressingMode 	= I2C_ADDRESSINGMODE_7BIT;
-		hi2c1.Init.DualAddressMode 	= I2C_DUALADDRESS_DISABLE;
-		hi2c1.Init.GeneralCallMode 	= I2C_GENERALCALL_DISABLE;
-		hi2c1.Init.NoStretchMode 	= I2C_NOSTRETCH_DISABLE;
+	hi2c1 = aux_hi2c;
+	i2c_state = HAL_I2C_GetState(&hi2c1);
 
-		HAL_I2C_MspInit(&hi2c1);
+	if ((i2c_state != HAL_I2C_STATE_RESET) && (i2c_state != HAL_I2C_STATE_ERROR)) {
 
-		// Init I2C and read static device ID to check communication
-		if ((HAL_I2C_Init(&hi2c1) == HAL_OK) && (read_register(&hi2c1, REG_DEVID) == REGISTER_DEVID)) {
+		if ((read_register(&hi2c1, REG_DEVID) == REGISTER_DEVID)) {
 			return_value = true;
 		}
-	} else if (i2c_state != HAL_I2C_STATE_ERROR) {
-		// Not an STATE_ERROR or STATE_RESET,so initialization was already done
-		return_value = true;
 	}
 
 	return return_value;
 }
-
-
-void HAL_I2C_MspInit(I2C_HandleTypeDef *hi2c1) {
-	GPIO_InitTypeDef GPIO_InitStruct;
-
-	/* GPIO Ports Clock Enable */
-	__HAL_RCC_GPIOB_CLK_ENABLE();
-
-	/* I2C GPIO configuration */
-	GPIO_InitStruct.Pin 		= GPIO_PIN_8|GPIO_PIN_9;
-	GPIO_InitStruct.Mode 		= GPIO_MODE_AF_OD;
-	GPIO_InitStruct.Pull 		= GPIO_NOPULL;
-	GPIO_InitStruct.Speed 		= GPIO_SPEED_FREQ_LOW;
-	GPIO_InitStruct.Alternate 	= GPIO_AF4_I2C1;
-	HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
-
-	 /* Peripheral clock enable */
-	__HAL_RCC_I2C1_CLK_ENABLE();
-}
-
 
 coordinates_t adxl345_read_coordinates() {
 	uint8_t reg_data_coord = REG_DATAX0;

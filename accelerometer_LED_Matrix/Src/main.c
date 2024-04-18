@@ -31,14 +31,19 @@
 /* Private typedef -----------------------------------------------------------*/
 /* Private define ------------------------------------------------------------*/
 #define DEBOUNCE_TIME		40
+#define I2C_CLOCK_SPEED			100000	// This parameter must be set to a value lower than 400kHz
 
 /* Private macro -------------------------------------------------------------*/
 /* Private variables ---------------------------------------------------------*/
+static I2C_HandleTypeDef hi2c1;
+static SPI_HandleTypeDef hspi1;
 /* Private functions ---------------------------------------------------------*/
 static void SystemClock_Config(void);
 static void Error_Handler(void);
 static void communication_peripherals_init(void);
 static void FSM_init(void);
+bool_t I2C_init(void);
+bool_t SPI_init(void);
 
 /* Public functions ----------------------------------------------------------*/
 
@@ -70,6 +75,9 @@ int main(void) {
 
 	/* Initialize the I2C, SPI and UART peripherals*/
 	communication_peripherals_init();
+
+	adxl345_I2C_init(hi2c1);
+	max7219_SPI_init(hspi1);
 
 	/* Initialize FSM */
 	FSM_init();
@@ -119,11 +127,11 @@ static void communication_peripherals_init(void) {
 		Error_Handler();
 	}
 
-	if (!adlx345_I2C_init()) {
+	if (!I2C_init()) {
 		Error_Handler();
 	}
 
-	if (!max7219_SPI_init()) {
+	if (!SPI_init()) {
 		Error_Handler();
 	}
 }
@@ -198,6 +206,126 @@ static void SystemClock_Config(void)
 		Error_Handler();
 	}
 }
+
+
+bool_t I2C_init() {
+	bool_t return_value = false;
+	HAL_I2C_StateTypeDef i2c_state = HAL_I2C_GetState(&hi2c1);
+
+	if (i2c_state == HAL_I2C_STATE_RESET) {
+		/* I2C configuration*/
+		hi2c1.Instance 				= I2C1;
+		hi2c1.Init.ClockSpeed 		= I2C_CLOCK_SPEED;
+		hi2c1.Init.DutyCycle 		= I2C_DUTYCYCLE_2;
+		hi2c1.Init.AddressingMode 	= I2C_ADDRESSINGMODE_7BIT;
+		hi2c1.Init.DualAddressMode 	= I2C_DUALADDRESS_DISABLE;
+		hi2c1.Init.GeneralCallMode 	= I2C_GENERALCALL_DISABLE;
+		hi2c1.Init.NoStretchMode 	= I2C_NOSTRETCH_DISABLE;
+
+		HAL_I2C_MspInit(&hi2c1);
+
+		// Init I2C and read static device ID to check communication
+		if ((HAL_I2C_Init(&hi2c1) == HAL_OK)) {
+			return_value = true;
+		}
+	} else if (i2c_state != HAL_I2C_STATE_ERROR) {
+		// Not an STATE_ERROR or STATE_RESET,so initialization was already done
+		return_value = true;
+	}
+
+	return return_value;
+}
+
+void HAL_I2C_MspInit(I2C_HandleTypeDef *hi2c1) {
+	GPIO_InitTypeDef GPIO_InitStruct;
+
+	/* GPIO Ports Clock Enable */
+	__HAL_RCC_GPIOB_CLK_ENABLE();
+
+	/* I2C GPIO configuration */
+	GPIO_InitStruct.Pin 		= GPIO_PIN_8|GPIO_PIN_9;
+	GPIO_InitStruct.Mode 		= GPIO_MODE_AF_OD;
+	GPIO_InitStruct.Pull 		= GPIO_NOPULL;
+	GPIO_InitStruct.Speed 		= GPIO_SPEED_FREQ_LOW;
+	GPIO_InitStruct.Alternate 	= GPIO_AF4_I2C1;
+	HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
+
+	 /* Peripheral clock enable */
+	__HAL_RCC_I2C1_CLK_ENABLE();
+}
+
+
+bool_t SPI_init() {
+	bool_t return_value = false;
+	HAL_SPI_StateTypeDef spi_state = HAL_SPI_GetState(&hspi1);
+
+	if(spi_state == HAL_SPI_STATE_RESET) {
+		/* SPI configuration*/
+		hspi1.Instance 					= SPI1;
+		hspi1.Init.Mode 				= SPI_MODE_MASTER;
+		hspi1.Init.Direction			= SPI_DIRECTION_1LINE;
+		hspi1.Init.DataSize				= SPI_DATASIZE_16BIT;
+		hspi1.Init.CLKPolarity			= SPI_POLARITY_LOW;
+		hspi1.Init.CLKPhase				= SPI_PHASE_1EDGE;
+		hspi1.Init.NSS 					= SPI_NSS_SOFT;
+		hspi1.Init.BaudRatePrescaler 	= SPI_BAUDRATEPRESCALER_128;
+		hspi1.Init.FirstBit				= SPI_FIRSTBIT_MSB;
+		hspi1.Init.TIMode				= SPI_TIMODE_DISABLE;
+		hspi1.Init.CRCCalculation 		= SPI_CRCCALCULATION_DISABLE;
+
+		HAL_SPI_MspInit(&hspi1);
+		if (HAL_SPI_Init(&hspi1) == HAL_OK) {
+			return_value = true;
+		}
+
+		// Release Chip Select pin
+		HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4, GPIO_PIN_SET);
+	} else if (spi_state != HAL_SPI_STATE_ERROR) {
+		// Not an STATE_ERROR or STATE_RESET,so initialization was already done
+		return_value = true;
+	}
+	return return_value;
+}
+
+
+
+void HAL_SPI_MspInit(SPI_HandleTypeDef *hspi) {
+	GPIO_InitTypeDef  GPIO_InitStruct;
+
+  	/*** Configure the GPIOs ***/
+  	/* Enable GPIO clock */
+	/* GPIO Ports Clock Enable */
+	__HAL_RCC_GPIOA_CLK_ENABLE();
+
+	/* Configure SPI SCK */
+	GPIO_InitStruct.Pin 		= GPIO_PIN_5;
+	GPIO_InitStruct.Mode 		= GPIO_MODE_AF_PP;
+	GPIO_InitStruct.Pull  		= GPIO_PULLDOWN;
+	GPIO_InitStruct.Speed 		= GPIO_SPEED_HIGH;
+	GPIO_InitStruct.Alternate 	= GPIO_AF5_SPI1;
+	HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
+
+	/* Configure SPI MOSI */
+	GPIO_InitStruct.Pin 		= GPIO_PIN_7;
+	GPIO_InitStruct.Mode 		= GPIO_MODE_AF_PP;
+	GPIO_InitStruct.Speed 		= GPIO_SPEED_HIGH;
+	GPIO_InitStruct.Alternate 	= GPIO_AF5_SPI1;
+	HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
+
+	/*Configure SPI CS */
+	GPIO_InitStruct.Pin 		= GPIO_PIN_4;
+	GPIO_InitStruct.Mode 		= GPIO_MODE_OUTPUT_PP;
+	GPIO_InitStruct.Pull 		= GPIO_PULLUP;
+	GPIO_InitStruct.Speed 		= GPIO_SPEED_FREQ_LOW;
+	HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
+
+	/*** Configure the SPI peripheral ***/
+	/* Enable SPI clock */
+	/* Peripheral clock enable */
+	__HAL_RCC_SPI1_CLK_ENABLE();
+}
+
+
 /**
  * @brief  This function is executed in case of error occurrence.
  * @param  None

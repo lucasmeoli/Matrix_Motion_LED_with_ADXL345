@@ -2434,3 +2434,33 @@ java.lang.IllegalStateException: Disconnected before saving. Please post stacktr
 		at org.eclipse.swt.internal.gtk3.GTK3.gtk_main_iteration_do(Native Method)
 		at org.eclipse.swt.widgets.Display.readAndDispatch(Display.java:4514)
 		... 22 more
+!SESSION 2024-04-18 14:38:18.592 -----------------------------------------------
+eclipse.buildId=Version 1.14.0
+java.version=17.0.8.1
+java.vendor=Eclipse Adoptium
+BootLoader constants: OS=linux, ARCH=x86_64, WS=gtk, NL=en_US
+Command-line arguments:  -os linux -ws gtk -arch x86_64
+
+!ENTRY com.st.stm32cube.ide.mcu.informationcenter 4 4 2024-04-18 14:38:23.253
+!MESSAGE CubeMX plugin appears to be active, Log4j initialization might be too late.
+
+!ENTRY com.st.stm32cube.ide.mcu.informationcenter 1 1 2024-04-18 14:38:23.254
+!MESSAGE Log4j2 initialized with config file /home/lpmeoli/Especializacion/trabajos_practicos/bimestre_01/PdC_Workspace/.metadata/.log4j2.xml
+
+!ENTRY com.st.stm32cube.ide.mcu.ide 1 1 2024-04-18 14:38:26.858
+!MESSAGE Started RMI Server, listening on port 41337
+!SESSION 2024-04-18 17:53:32.893 -----------------------------------------------
+eclipse.buildId=Version 1.14.0
+java.version=17.0.8.1
+java.vendor=Eclipse Adoptium
+BootLoader constants: OS=linux, ARCH=x86_64, WS=gtk, NL=en_US
+Command-line arguments:  -os linux -ws gtk -arch x86_64
+
+!ENTRY com.st.stm32cube.ide.mcu.informationcenter 4 4 2024-04-18 17:53:48.138
+!MESSAGE CubeMX plugin appears to be active, Log4j initialization might be too late.
+
+!ENTRY com.st.stm32cube.ide.mcu.informationcenter 1 1 2024-04-18 17:53:48.139
+!MESSAGE Log4j2 initialized with config file /home/lpmeoli/Especializacion/trabajos_practicos/bimestre_01/PdC_Workspace/.metadata/.log4j2.xml
+
+!ENTRY com.st.stm32cube.ide.mcu.ide 1 1 2024-04-18 17:53:50.860
+!MESSAGE Started RMI Server, listening on port 41338

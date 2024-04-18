@@ -1,5 +1,9 @@
-../Src/main.c:50:5:main	8	static
-../Src/main.c:95:13:FSM_init	8	static
-../Src/main.c:117:13:communication_peripherals_init	8	static
-../Src/main.c:153:13:SystemClock_Config	88	static
-../Src/main.c:206:13:Error_Handler	8	static
+../Src/main.c:55:5:main	88	static
+../Src/main.c:103:13:FSM_init	8	static
+../Src/main.c:125:13:communication_peripherals_init	8	static
+../Src/main.c:161:13:SystemClock_Config	88	static
+../Src/main.c:211:8:I2C_init	16	static
+../Src/main.c:239:6:HAL_I2C_MspInit	48	static
+../Src/main.c:258:8:SPI_init	16	static
+../Src/main.c:292:6:HAL_SPI_MspInit	48	static
+../Src/main.c:334:13:Error_Handler	8	static

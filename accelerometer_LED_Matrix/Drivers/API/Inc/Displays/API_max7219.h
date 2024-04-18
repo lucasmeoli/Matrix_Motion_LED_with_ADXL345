@@ -30,7 +30,7 @@ typedef bool bool_t;
   * @retval bool_t - TRUE if initialization is successful or if it has already been initialized
   * 		successfully; FALSE otherwise.
   */
-bool_t max7219_SPI_init();
+bool_t max7219_SPI_init(SPI_HandleTypeDef aux_hspi1);
 
 /**
   * @brief	Turn off all the LEDs of the all the active displays.

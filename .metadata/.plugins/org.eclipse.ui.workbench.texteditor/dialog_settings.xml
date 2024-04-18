@@ -1,14 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
-		<item key="selection" value="read_register"/>
+		<item key="selection" value="write_register"/>
 		<item key="wrap" value="true"/>
 		<item key="casesensitive" value="false"/>
 		<item key="wholeword" value="false"/>
 		<item key="incremental" value="false"/>
 		<item key="isRegEx" value="false"/>
 		<list key="findhistory">
+			<item value="write_register"/>
 			<item value="read_register"/>
+			<item value="ADXL345_ADDRESS"/>
 			<item value="- COORD"/>
 			<item value="-COORD"/>
 			<item value="nd_data(REG"/>
@@ -21,8 +23,6 @@
 			<item value="3"/>
 			<item value="MAX_COORDINATE_VALUE"/>
 			<item value="pmesg_error"/>
-			<item value="current_display"/>
-			<item value="TEMP"/>
 		</list>
 		<list key="replacehistory">
 			<item value="t"/>

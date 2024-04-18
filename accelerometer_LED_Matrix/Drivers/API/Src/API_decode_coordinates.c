@@ -78,21 +78,15 @@ bool_t coordinates_FSM_init() {
 
 
 	if ((adxl345_i2c_state == HAL_I2C_STATE_ERROR) || (adxl345_i2c_state == HAL_I2C_STATE_RESET)) {
-		if (!adlx345_I2C_init()) {
-			return false;
-		}
+		return false;
 	}
 
 	if ((max7219_spi_state == HAL_SPI_STATE_ERROR) || (max7219_spi_state == HAL_SPI_STATE_RESET)) {
-		if (!max7219_SPI_init()) {
-			return false;
-		}
+		return false;
 	}
 
 	if ((uart_state == HAL_UART_STATE_ERROR) || (uart_state == HAL_UART_STATE_RESET)) {
-		if (!uart_init()) {
-			return false;
-		}
+		return false;
 	}
 
 	current_state = CONFIGURE_MODULES;

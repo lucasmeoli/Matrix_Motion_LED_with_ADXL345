@@ -1,5 +1,9 @@
-../Src/main.c:50:5:main	1
-../Src/main.c:95:13:FSM_init	3
-../Src/main.c:117:13:communication_peripherals_init	4
-../Src/main.c:153:13:SystemClock_Config	4
-../Src/main.c:206:13:Error_Handler	1
+../Src/main.c:55:5:main	1
+../Src/main.c:103:13:FSM_init	3
+../Src/main.c:125:13:communication_peripherals_init	4
+../Src/main.c:161:13:SystemClock_Config	4
+../Src/main.c:211:8:I2C_init	4
+../Src/main.c:239:6:HAL_I2C_MspInit	1
+../Src/main.c:258:8:SPI_init	4
+../Src/main.c:292:6:HAL_SPI_MspInit	1
+../Src/main.c:334:13:Error_Handler	1

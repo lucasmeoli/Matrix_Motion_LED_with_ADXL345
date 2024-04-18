@@ -40,7 +40,7 @@ typedef enum {
   * @param  None
   * @retval bool_t - TRUE if initialization is successful or if it has already been initialized successfully; FALSE otherwise.
   */
-bool_t adlx345_I2C_init();
+bool_t adxl345_I2C_init(I2C_HandleTypeDef aux_hi2c);
 
 /**
  * @brief   Reads the coordinates from the ADXL345 accelerometer.
