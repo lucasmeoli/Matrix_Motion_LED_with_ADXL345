@@ -49,11 +49,11 @@ bool_t adxl345_I2C_init(I2C_HandleTypeDef aux_hi2c) {
 	HAL_I2C_StateTypeDef i2c_state;
 
 	hi2c1 = aux_hi2c;
-	i2c_state = HAL_I2C_GetState(&hi2c1);
+	i2c_state = I2C_get_state(&hi2c1);
 
 	if ((i2c_state != HAL_I2C_STATE_RESET) && (i2c_state != HAL_I2C_STATE_ERROR)) {
 
-		if ((read_register(&hi2c1, REG_DEVID) == REGISTER_DEVID)) {
+		if ((I2C_read_register(&hi2c1, REG_DEVID) == REGISTER_DEVID)) {
 			return_value = true;
 		}
 	}
@@ -66,20 +66,19 @@ coordinates_t adxl345_read_coordinates() {
 	coordinates_t coord;
 	uint16_t coord_size = sizeof(coord)/ sizeof(uint8_t);
 
-	HAL_I2C_Master_Transmit(&hi2c1, ADXL345_ADDRESS<<1, &reg_data_coord, sizeof(reg_data_coord), I2C_TIMEOUT);
-	HAL_I2C_Master_Receive(&hi2c1, ADXL345_ADDRESS<<1, (uint8_t *) &coord, coord_size, I2C_TIMEOUT);
+	I2C_read_registers(&hi2c1, reg_data_coord, (uint8_t *) &coord, coord_size);
 
 	return coord;
 }
 
 
 HAL_I2C_StateTypeDef adxl345_get_I2C_state() {
-	return HAL_I2C_GetState(&hi2c1);
+	return I2C_get_state(&hi2c1);
 }
 
 bool_t adxl345_is_data_ready() {
 	uint8_t reg = REG_INT_SOURCE;
-	uint8_t value = read_register(&hi2c1,reg);
+	uint8_t value = I2C_read_register(&hi2c1,reg);
 
 	if (value&MASK_DATA_READY) {
 		return true;
@@ -95,13 +94,13 @@ void adxl345_set_sensitivity(adxl345_sensitivity_t sensitivity) {
 		return;
 	}
 
-	write_register(&hi2c1, REG_DATA_FORMAT, reg_sensitivity);
+	I2C_write_register(&hi2c1, REG_DATA_FORMAT, reg_sensitivity);
 }
 
 
 #define DEFINE_ADXL345_REGISTER_FUNCTION(name, reg) \
     void adxl345_set_##name(uint8_t value) { \
-        write_register(&hi2c1, reg, value); \
+		I2C_write_register(&hi2c1, reg, value); \
     }
 
 DEFINE_ADXL345_REGISTER_FUNCTION(bandwidth_rate, REG_BW_RATE)

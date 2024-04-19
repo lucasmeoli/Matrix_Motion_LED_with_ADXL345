@@ -1,0 +1,57 @@
+/*
+ * API_adxl345_port.h
+ *
+ *  Created on: Apr 17, 2024
+ *      Author: lpmeoli
+ */
+
+#ifndef API_INC_ACCELEROMETERS_API_ADXL345_PORT_H_
+#define API_INC_ACCELEROMETERS_API_ADXL345_PORT_H_
+
+
+/* Exported functions ------------------------------------------------------- */
+/**
+ * @brief   Reads the value from the specified register of the ADXL345 accelerometer.
+ *
+ * @param   p_hi2c: Pointer to an I2C_HandleTypeDef structure that contains
+ *          the configuration information for the specified I2C.
+ * @param   reg: The register address to read from.
+ * @retval  The value read from the specified register.
+ */
+
+uint8_t I2C_read_register(I2C_HandleTypeDef *p_hi2c, uint8_t reg);
+
+/**
+ * @brief   Writes a value to the specified register of the ADXL345 accelerometer.
+ *
+ * @param   p_hi2c: Pointer to an I2C_HandleTypeDef structure that contains
+ *          the configuration information for the specified I2C.
+ * @param   reg: The register address to write to.
+ * @param   value: The value to write to the specified register.
+ * @retval  None
+ */
+void I2C_write_register(I2C_HandleTypeDef *p_hi2c, uint8_t reg, uint8_t value);
+
+/**
+ * @brief   Reads data from the specified register address of the ADXL345 accelerometer
+ *          via I2C communication.
+ *
+ * @param   reg_address: The register address to read from.
+ * @param   data_buffer: Pointer to the buffer where the received data will be stored.
+ * @param   data_size: The size of the data to be received, in bytes.
+ */
+
+void I2C_read_registers(uint8_t reg_address, uint8_t *data_buffer, uint16_t data_size);
+
+/**
+ * @brief   Retrieves the current state of the specified I2C peripheral.
+ *
+ * @param   p_hi2c: Pointer to an I2C_HandleTypeDef structure that contains
+ *          the configuration information for the specified I2C.
+ * @retval  The current state of the specified I2C peripheral.
+ */
+
+HAL_I2C_StateTypeDef I2C_get_state(I2C_HandleTypeDef *p_hi2c);
+
+
+#endif /* API_INC_ACCELEROMETERS_API_ADXL345_PORT_H_ */

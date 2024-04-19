@@ -31,7 +31,7 @@
 /* Private typedef -----------------------------------------------------------*/
 /* Private define ------------------------------------------------------------*/
 #define DEBOUNCE_TIME		40
-#define I2C_CLOCK_SPEED			100000	// This parameter must be set to a value lower than 400kHz
+#define I2C_CLOCK_SPEED		100000	// This parameter must be set to a value lower than 400kHz
 
 /* Private macro -------------------------------------------------------------*/
 /* Private variables ---------------------------------------------------------*/

@@ -18,7 +18,7 @@
  * 		    reg: The register address to read from.
  * @retval  The value read from the specified register.
  */
-uint8_t read_register(I2C_HandleTypeDef *p_hi2c, uint8_t reg);
+uint8_t I2C_read_register(I2C_HandleTypeDef *p_hi2c, uint8_t reg);
 
 /**
  * @brief   Writes a value to the specified register of the ADXL345 accelerometer.
@@ -29,8 +29,26 @@ uint8_t read_register(I2C_HandleTypeDef *p_hi2c, uint8_t reg);
  * 		    value: The value to write to the register.
  * @retval  None.
  */
-void write_register(I2C_HandleTypeDef *p_hi2c, uint8_t reg, uint8_t value);
+void I2C_write_register(I2C_HandleTypeDef *p_hi2c, uint8_t reg, uint8_t value);
 
+/**
+ * @brief   Reads data from a specific register address of a device via I2C communication.
+ *
+ * @param   p_hi2c: Pointer to an I2C_HandleTypeDef structure containing
+ *          the configuration information for the specified I2C peripheral.
+ * @param   reg_data: The register address to read from.
+ * @param   p_data: Pointer to the buffer where the received data will be stored.
+ * @param   data_size: The size of the data to be received, in bytes.
+ */
+void I2C_read_registers(I2C_HandleTypeDef *p_hi2c, uint8_t reg_data, uint8_t * p_data, uint16_t data_size);
 
+/**
+ * @brief   Obtains the current state of the specified I2C peripheral.
+ *
+ * @param   p_hi2c: Pointer to an I2C_HandleTypeDef structure containing
+ *          the configuration information for the specified I2C peripheral.
+ * @retval  The current state of the specified I2C peripheral.
+ */
+HAL_I2C_StateTypeDef I2C_get_state(I2C_HandleTypeDef *p_hi2c);
 
 #endif /* API_INC_ACCELEROMETERS_API_ADXL345_PORT_H_ */

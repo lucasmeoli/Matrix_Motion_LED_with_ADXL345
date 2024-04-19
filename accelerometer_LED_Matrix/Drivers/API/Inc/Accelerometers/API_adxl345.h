@@ -31,15 +31,13 @@ typedef enum {
 /* Exported functions ------------------------------------------------------- */
 
 /**
-  * @brief  Initializes the I2C1 communication interface with the ADXL345 accelerometer.
-  *         This function configures the I2C1 peripheral for communication with the ADXL345 accelerometer.
-  *         It sets the clock speed to 100 kHz and the addressing mode to 7 bits.
-  *         If the I2C1 peripheral is in RESET state, it configures the peripheral with specified parameters.
-  *         After initialization, it verifies communication by reading the static device ID register.
-  *
-  * @param  None
-  * @retval bool_t - TRUE if initialization is successful or if it has already been initialized successfully; FALSE otherwise.
-  */
+ * @brief   Initializes the ADXL345 accelerometer via I2C communication.
+ *
+ * @param   aux_hi2c: An I2C_HandleTypeDef structure containing configuration
+ *          information for the I2C peripheral to be used for initialization.
+ * @retval  true if the initialization is successful and the accelerometer is
+ *          detected, false otherwise.
+ */
 bool_t adxl345_I2C_init(I2C_HandleTypeDef aux_hi2c);
 
 /**
