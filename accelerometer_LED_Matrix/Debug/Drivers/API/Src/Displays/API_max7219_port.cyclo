@@ -1,1 +1,2 @@
-../Drivers/API/Src/Displays/API_max7219_port.c:24:6:send_data	1
+../Drivers/API/Src/Displays/API_max7219_port.c:24:6:SPI_send_data	1
+../Drivers/API/Src/Displays/API_max7219_port.c:28:22:SPI_get_state	1

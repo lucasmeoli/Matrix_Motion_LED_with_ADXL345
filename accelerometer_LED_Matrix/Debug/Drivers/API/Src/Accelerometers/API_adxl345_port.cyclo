@@ -1,4 +1,4 @@
 ../Drivers/API/Src/Accelerometers/API_adxl345_port.c:25:9:I2C_read_register	1
 ../Drivers/API/Src/Accelerometers/API_adxl345_port.c:35:6:I2C_write_register	1
-../Drivers/API/Src/Accelerometers/API_adxl345_port.c:42:6:I2C_read_registers	1
+../Drivers/API/Src/Accelerometers/API_adxl345_port.c:43:6:I2C_read_registers	1
 ../Drivers/API/Src/Accelerometers/API_adxl345_port.c:49:22:I2C_get_state	1

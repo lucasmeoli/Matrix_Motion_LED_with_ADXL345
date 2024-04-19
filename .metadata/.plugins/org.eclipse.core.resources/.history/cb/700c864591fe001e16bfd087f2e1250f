@@ -207,15 +207,6 @@ static void SystemClock_Config(void)
 	}
 }
 
-/**
- * @brief   Initializes the I2C communication interface and configures the associated peripheral.
- * 			This function initializes the I2C peripheral if it is in the RESET state. It sets up the
- * 			clock speed, duty cycle, addressing mode, and other parameters for I2C communication.
- *
- * @param	None
- * @retval  true if the initialization is successful or if the peripheral was already
- *          initialized, false otherwise.
- */
 
 bool_t I2C_init() {
 	bool_t return_value = false;
@@ -264,17 +255,6 @@ void HAL_I2C_MspInit(I2C_HandleTypeDef *hi2c1) {
 }
 
 
-/**
- * @brief   Initializes the SPI communication interface and configures the associated peripheral.
- *
- * 			This function initializes the SPI peripheral if it is in the RESET state. It sets up the
- * 			mode, direction, data size, clock polarity, clock phase, baud rate prescaler, and other parameters
- * 			for SPI communication.
- *
- * @paramn  None
- * @retval  true if the initialization is successful or if the peripheral was already
- *          initialized, false otherwise.
- */
 bool_t SPI_init() {
 	bool_t return_value = false;
 	HAL_SPI_StateTypeDef spi_state = HAL_SPI_GetState(&hspi1);

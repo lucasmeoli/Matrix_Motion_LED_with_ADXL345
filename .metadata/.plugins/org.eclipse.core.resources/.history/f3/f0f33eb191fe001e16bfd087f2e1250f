@@ -56,7 +56,9 @@ bool_t sensitivity_FSM_init() {
 	HAL_UART_StateTypeDef uart_state = uart_get_state();
 
 	if ((uart_state == HAL_UART_STATE_ERROR) || (uart_state == HAL_UART_STATE_RESET)) {
-		return false;
+		if (!uart_init()) {
+			return false;
+		}
 	}
 
 	/* Initialize delay timer for button taps*/

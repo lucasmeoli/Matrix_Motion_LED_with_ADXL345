@@ -34,6 +34,7 @@ typedef enum {
 /* Private define ------------------------------------------------------------*/
 #define REGISTER_DEVID		0xE5
 #define MASK_DATA_READY		0x80
+#define I2C_TIMEOUT			1000
 
 /* Private macro -------------------------------------------------------------*/
 /* Private variables ---------------------------------------------------------*/

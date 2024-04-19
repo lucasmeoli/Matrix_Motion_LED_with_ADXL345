@@ -21,13 +21,10 @@
 /* Private variables ---------------------------------------------------------*/
 /* Private function prototypes -----------------------------------------------*/
 /* Public functions ----------------------------------------------------------*/
-void SPI_send_data(SPI_HandleTypeDef *p_hspi1, uint16_t data, uint16_t size) {
+void send_data(SPI_HandleTypeDef *p_hspi1, uint16_t data, uint16_t size) {
 	HAL_SPI_Transmit(p_hspi1, (uint8_t *)&data, size, SPI_TIMEOUT);
 }
 
-HAL_SPI_StateTypeDef SPI_get_state(SPI_HandleTypeDef *p_hspi1) {
-	return HAL_SPI_GetState(p_hspi1);
-}
 
 
 

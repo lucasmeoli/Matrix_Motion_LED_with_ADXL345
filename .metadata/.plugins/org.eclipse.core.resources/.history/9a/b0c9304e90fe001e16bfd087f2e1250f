@@ -49,7 +49,7 @@ bool_t max7219_SPI_init(SPI_HandleTypeDef aux_hspi1) {
 	HAL_SPI_StateTypeDef spi_state;
 
 	hspi1 = aux_hspi1;
-	spi_state = SPI_get_state(&hspi1);;
+	spi_state = HAL_SPI_GetState(&hspi1);
 
 	if ((spi_state != HAL_SPI_STATE_RESET) && (spi_state != HAL_SPI_STATE_ERROR)) {
 			return_value = true;
@@ -118,7 +118,7 @@ void max7219_set_displays(uint8_t total_displays) {
 
 /* ---------- Getters ---------- */
 HAL_SPI_StateTypeDef max7219_get_SPI_state() {
-	return SPI_get_state(&hspi1);
+	return HAL_SPI_GetState(&hspi1);
 }
 
 

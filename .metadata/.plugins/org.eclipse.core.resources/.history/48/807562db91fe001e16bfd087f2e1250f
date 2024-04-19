@@ -32,8 +32,10 @@ typedef enum {
 } adxl345_register_t;
 
 /* Private define ------------------------------------------------------------*/
+#define CLOCK_SPEED			100000	// This parameter must be set to a value lower than 400kHz
 #define REGISTER_DEVID		0xE5
 #define MASK_DATA_READY		0x80
+#define I2C_TIMEOUT			1000
 
 /* Private macro -------------------------------------------------------------*/
 /* Private variables ---------------------------------------------------------*/

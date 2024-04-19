@@ -20,12 +20,5 @@
  */
 void SPI_send_data(SPI_HandleTypeDef *p_hspi1, uint16_t data, uint16_t size);
 
-/**
- * @brief   Obtains the current state of the specified SPI peripheral.
- *
- * @param   p_hspi1: Pointer to an SPI_HandleTypeDef structure containing
- *          the configuration information for the specified SPI peripheral.
- * @retval  The current state of the specified SPI peripheral.
- */
-HAL_SPI_StateTypeDef SPI_get_state(SPI_HandleTypeDef *p_hspi1);
+HAL_SPI_StateTypeDef SPI_get_state(SPI_HandleTypeDef *p_hspi1) ;
 #endif /* API_INC_DISPLAYS_API_MAX7219_PORT_H_ */

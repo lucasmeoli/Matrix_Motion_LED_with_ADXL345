@@ -275,6 +275,7 @@ void HAL_I2C_MspInit(I2C_HandleTypeDef *hi2c1) {
  * @retval  true if the initialization is successful or if the peripheral was already
  *          initialized, false otherwise.
  */
+
 bool_t SPI_init() {
 	bool_t return_value = false;
 	HAL_SPI_StateTypeDef spi_state = HAL_SPI_GetState(&hspi1);

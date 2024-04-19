@@ -12,15 +12,24 @@
 typedef bool bool_t;
 
 /* Exported functions ------------------------------------------------------- */
-
 /**
- * @brief   Initializes the MAX7219 display driver via SPI communication.
- *
- * @param   aux_hspi1: An SPI_HandleTypeDef structure containing configuration
- *          information for the SPI peripheral to be used for initialization.
- * @retval  true if the initialization is successful and the SPI peripheral is
- *          ready, false otherwise.
- */
+  * @brief	Initializes the SPI communication interface for MAX7219.
+  *
+  *         Configures SPI1 as a master device with the following parameters:
+  *         - Mode: Master mode.
+  *         - Data size: 16 bits.
+  *         - Clock polarity: Low.
+  *         - Clock phase: First edge.
+  *         - Baud rate prescaler: 128.
+  *         - Bit order: MSB first.
+  *
+  *         If SPI1 is in RESET state, it configures the peripheral with the specified parameters.
+  *         After initialization, if successful, it releases the Chip Select pin.
+  *
+  * @param  None
+  * @retval bool_t - TRUE if initialization is successful or if it has already been initialized
+  * 		successfully; FALSE otherwise.
+  */
 bool_t max7219_SPI_init(SPI_HandleTypeDef aux_hspi1);
 
 /**

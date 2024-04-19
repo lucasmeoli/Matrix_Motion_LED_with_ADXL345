@@ -1,8 +1,8 @@
-../Drivers/API/Src/Accelerometers/API_adxl345.c:47:8:adxl345_I2C_init	4
-../Drivers/API/Src/Accelerometers/API_adxl345.c:64:15:adxl345_read_coordinates	1
-../Drivers/API/Src/Accelerometers/API_adxl345.c:78:22:adxl345_get_I2C_state	1
-../Drivers/API/Src/Accelerometers/API_adxl345.c:82:8:adxl345_is_data_ready	2
-../Drivers/API/Src/Accelerometers/API_adxl345.c:93:6:adxl345_set_sensitivity	2
-../Drivers/API/Src/Accelerometers/API_adxl345.c:109:1:adxl345_set_bandwidth_rate	1
-../Drivers/API/Src/Accelerometers/API_adxl345.c:110:1:adxl345_set_power_control	1
-../Drivers/API/Src/Accelerometers/API_adxl345.c:111:1:adxl345_set_data_format	1
+../Drivers/API/Src/Accelerometers/API_adxl345.c:45:8:adxl345_I2C_init	4
+../Drivers/API/Src/Accelerometers/API_adxl345.c:62:15:adxl345_read_coordinates	1
+../Drivers/API/Src/Accelerometers/API_adxl345.c:73:22:adxl345_get_I2C_state	1
+../Drivers/API/Src/Accelerometers/API_adxl345.c:77:8:adxl345_is_data_ready	2
+../Drivers/API/Src/Accelerometers/API_adxl345.c:88:6:adxl345_set_sensitivity	2
+../Drivers/API/Src/Accelerometers/API_adxl345.c:104:1:adxl345_set_bandwidth_rate	1
+../Drivers/API/Src/Accelerometers/API_adxl345.c:105:1:adxl345_set_power_control	1
+../Drivers/API/Src/Accelerometers/API_adxl345.c:106:1:adxl345_set_data_format	1
